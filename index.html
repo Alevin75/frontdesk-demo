@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Front desk — demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#16202b; --muted:#6b7683; --bg:#eef1f6; --card:#fff;
@@ -17,46 +17,53 @@
 html,body{margin:0;height:100%}
 body{font-family:"Inter","Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.45}
 .app{display:flex;min-height:100vh}
-/* sidebar */
-.side{width:236px;background:var(--side);color:var(--side-ink);flex:0 0 auto;display:flex;flex-direction:column}
-.side .brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
-.side .brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),var(--green-d));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
-.side .brand b{color:#fff;font-size:15px;font-weight:700;letter-spacing:.02em}
-.side .brand span{display:block;font-size:10.5px;color:#8fb3a6;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-.prop{margin:14px 14px 6px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+/* ---------- sidebar ---------- */
+.side{width:250px;background:var(--side);color:var(--side-ink);flex:0 0 auto;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),var(--green-d));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+.brand b{color:#fff;font-size:14.5px;font-weight:700;letter-spacing:.01em;display:block}
+.brand span{font-size:10.5px;color:#8fb3a6;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.prop{margin:14px 14px 8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
 .prop span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8fb3a6;font-weight:700}
-.prop b{color:#fff;font-weight:600}
-nav.side{padding:6px 10px 16px}
-nav.side button{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;color:var(--side-ink);
-  font:inherit;font-weight:600;font-size:13.5px;padding:10px 12px;border-radius:9px;cursor:pointer;text-align:left}
-nav.side button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav.side button:hover{background:rgba(255,255,255,.06)}
-nav.side button.on{background:var(--green);color:#fff}
-nav.side button .badge{margin-left:auto;background:#fff;color:var(--green-d);font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px}
-/* main */
+.prop b{color:#fff;font-weight:600;font-size:14px}
+nav{padding:4px 10px 20px}
+.sect{margin-top:14px}
+.sect>.st{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#6f9187;font-weight:700;padding:6px 12px 4px}
+nav button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;color:var(--side-ink);
+  font:inherit;font-weight:500;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer;text-align:left}
+nav button svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+nav button:hover{background:rgba(255,255,255,.06)}
+nav button.on{background:var(--green);color:#fff;font-weight:600}
+nav button .badge{margin-left:auto;background:#fff;color:var(--green-d);font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px}
+.side .foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:#7f9f95;line-height:1.5}
+/* ---------- main ---------- */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 20px;position:sticky;top:0;z-index:10}
+.topbar{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 20px;position:sticky;top:0;z-index:10}
 .topbar h1{font-size:17px;font-weight:700;margin:0}
+.topbar .sub{font-size:12px;color:var(--muted);font-weight:500}
 .topbar .demo{margin-left:auto;display:flex;align-items:center;gap:8px}
-.chip{background:#fff4e6;color:#a85b12;border:1px solid #f2d3ad;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:999px}
+.chip{background:#fff4e6;color:#a85b12;border:1px solid #f2d3ad;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:999px;white-space:nowrap}
 .chip.g{background:#e7f7f0;color:#0e8f6b;border-color:#bfe8d8}
+.chip.b{background:#eaf1fe;color:#2f6bd6;border-color:#cfe0fb}
 .view{padding:22px;display:none}
 .view.on{display:block}
 .grid{display:grid;gap:16px}
 .k4{grid-template-columns:repeat(4,1fr)}
 .k3{grid-template-columns:repeat(3,1fr)}
 .two{grid-template-columns:1.4fr 1fr}
-@media(max-width:1050px){.k4{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
+.twoe{grid-template-columns:1fr 1fr}
+@media(max-width:1080px){.k4{grid-template-columns:repeat(2,1fr)}.two,.twoe{grid-template-columns:1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh)}
-.card .hd{padding:13px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between}
+.card .hd{padding:13px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .card .hd h3{margin:0;font-size:13.5px;font-weight:700}
-.card .hd .m{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.card .hd .m{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .card .bd{padding:14px 16px}
 .kpi{padding:16px}
-.kpi .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;min-height:28px}
-.kpi .val{font-size:26px;font-weight:800;margin-top:4px}
+.kpi .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;min-height:29px}
+.kpi .val{font-size:25px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
 .kpi .sub{font-size:12px;color:var(--muted);margin-top:2px}
 .kpi .up{color:var(--green-d);font-weight:700}
+.kpi .dn{color:var(--red);font-weight:700}
 table{width:100%;border-collapse:collapse}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line2);font-size:13px;vertical-align:middle}
 th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
@@ -66,255 +73,653 @@ tr:last-child td{border-bottom:0}
 .pill.ok{background:#e7f7f0;color:#0e8f6b}
 .pill.check{background:#fdece7;color:#c0452f}
 .pill.in{background:#eaf1fe;color:#2f6bd6}
-.avatar{width:30px;height:30px;border-radius:50%;background:#dfe7ee;color:#41505f;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.pill.warn{background:#fff4e6;color:#a85b12}
+.avatar{width:30px;height:30px;border-radius:50%;background:#dfe7ee;color:#41505f;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex:0 0 auto}
 .gname{display:flex;align-items:center;gap:9px}
 .gname b{font-weight:600}
-.gname span{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
+.gname .txt{min-width:0}
+.gname .txt>span{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
+.bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--green),var(--green-d))}
+/* charts */
+.bars{display:flex;align-items:flex-end;gap:10px;height:190px;padding-top:8px}
+.bars .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%}
+.bars .cl{font-size:10.5px;color:var(--muted);font-weight:600}
+.bars .cv{font-size:10.5px;color:var(--ink);font-weight:700}
+.bars .cb{width:100%;max-width:44px;background:linear-gradient(180deg,var(--green),var(--green-d));border-radius:7px 7px 0 0;min-height:4px}
+.pie{display:flex;align-items:center;gap:18px}
+.pie .donut{width:150px;height:150px;border-radius:50%;flex:0 0 auto}
+.legend{font-size:12.5px}
+.legend div{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.legend b{margin-left:auto;font-variant-numeric:tabular-nums}
 /* chat */
-.chatwrap{display:grid;grid-template-columns:280px 1fr;gap:0}
+.chatwrap{display:grid;grid-template-columns:290px 1fr}
 @media(max-width:900px){.chatwrap{grid-template-columns:1fr}}
 .convlist{border-right:1px solid var(--line2)}
 .conv{padding:12px 14px;border-bottom:1px solid var(--line2);cursor:pointer;display:flex;gap:10px}
 .conv.on{background:#f4fbf8}
 .conv .t{flex:1;min-width:0}
-.conv b{font-weight:600;font-size:13px}
-.conv span{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.conv .dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:6px}
-.chatpanel{display:flex;flex-direction:column;height:520px}
-.chathead{padding:12px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:10px}
-.chathead .n{flex:1}
-.chathead b{font-weight:700}
-.chathead span{display:block;font-size:11.5px;color:var(--muted)}
-.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#fafcfd}
-.msg{max-width:72%;padding:9px 12px;border-radius:12px;font-size:13.5px;line-height:1.4}
-.msg .w{display:block;font-size:10.5px;opacity:.65;margin-top:3px}
-.msg.them{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
-.msg.me{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
-.chatbar{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line2)}
-.chatbar input{flex:1;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:9px}
-.btn{border:0;font:inherit;font-weight:700;font-size:13px;padding:10px 16px;border-radius:9px;cursor:pointer;background:var(--green);color:#fff}
-.btn:hover{background:var(--green-d)}
-.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.note{font-size:12px;color:var(--muted);padding:10px 16px}
-.rightbtns{display:flex;gap:8px}
-.bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding:8px 0}
-.bar{flex:1;background:linear-gradient(180deg,var(--green),var(--green-d));border-radius:6px 6px 0 0;position:relative;min-height:6px}
-.bar span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:10px;color:var(--muted);font-weight:600}
-.barlbl{display:flex;gap:8px;font-size:10.5px;color:var(--muted);text-align:center}
-.barlbl div{flex:1}
-.foot{margin-top:auto;padding:14px 20px;color:var(--muted);font-size:11.5px;border-top:1px solid var(--line)}
+.conv b{font-weight:600;font-size:13px;display:block}
+.conv small{color:var(--muted);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:6px;flex:0 0 auto}
+.thread{padding:16px;display:flex;flex-direction:column;gap:12px;min-height:300px}
+.msg{max-width:74%;padding:10px 13px;border-radius:12px;font-size:13.5px}
+.msg.g{background:#f1f4f8;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.m{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.msg time{display:block;font-size:11px;opacity:.75;margin-top:4px}
+.composer{border-top:1px solid var(--line2);padding:12px 14px;display:flex;gap:10px}
+.composer input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit}
+/* note */
+.note{background:#f2f8ff;border:1px solid #d7e6fb;border-left:4px solid var(--blue);border-radius:10px;padding:12px 14px;margin-top:16px}
+.note .nh{display:flex;align-items:center;gap:8px;font-weight:700;font-size:12.5px;color:#23509b;margin-bottom:5px}
+.note .nh svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.note .nb{font-size:13px;color:#33415c;line-height:1.55}
+.note .nb code{background:#e3eefc;border-radius:4px;padding:1px 5px;font-size:12.5px}
+.note.gr{background:#f2fbf7;border-color:#cbeadc;border-left-color:var(--green-d)}
+.note.gr .nh{color:#0e8f6b}
+.note.am{background:#fff8ef;border-color:#f5ddbb;border-left-color:var(--amber)}
+.note.am .nh{color:#a85b12}
+/* misc */
+.panelhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.btn{border:0;border-radius:10px;padding:9px 14px;font:inherit;font-weight:600;font-size:13px;cursor:pointer}
+.btn.g{background:var(--green);color:#fff}
+.btn.n{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.btn.s{padding:6px 11px;font-size:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tab.on{background:var(--green);border-color:var(--green);color:#fff}
+.field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;font-size:13px;width:100%}
+.row{display:flex;align-items:center;gap:10px}
+.muted{color:var(--muted);font-size:12.5px}
+.sep{height:1px;background:var(--line2);margin:14px 0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .cd{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:11px;text-align:center}
+.cal .cd b{display:block;font-size:12.5px}
+.gridcells{display:grid;gap:3px;font-size:11.5px}
+.gridcells .h{font-weight:700;color:var(--muted);text-align:center;padding:4px 0}
+.gridcells .r{font-weight:600;padding:5px 6px;white-space:nowrap}
+.cell{border-radius:6px;padding:5px 0;text-align:center;font-weight:600}
+.cell.free{background:#eef1f6;color:#93a0ad}
+.cell.busy{background:#d7f2e8;color:#0e8f6b}
+.cell.dens{background:#12b886;color:#fff}
 </style>
 </head>
 <body>
 <div class="app">
   <aside class="side">
     <div class="brand">
-      <div class="mark">◆</div>
-      <div><b>FRONT DESK</b><span>Demo</span></div>
+      <div class="mark">FD</div>
+      <div><b>Front desk</b><span>Demo</span></div>
     </div>
     <div class="prop"><span>Property</span><b>Your property</b></div>
-    <nav class="side" id="nav"></nav>
-    <div class="foot">Demo panel · sample data.<br>Not connected to any real system.</div>
+    <nav id="nav"></nav>
+    <div class="foot">
+      Demo panel · sample data.<br>
+      Not connected to any real system.
+    </div>
   </aside>
-
   <div class="main">
     <div class="topbar">
       <h1 id="ttl">Today</h1>
-      <div class="demo"><span class="chip">Demo</span><span class="chip g">Sample data</span></div>
+      <span class="sub" id="tsub"></span>
+      <div class="demo">
+        <span class="chip">Demo</span>
+        <span class="chip g">Sample data</span>
+      </div>
     </div>
-
-    <section class="view on" id="v-today">
-      <div class="grid k4">
-        <div class="card kpi"><div class="lbl">Occupancy</div><div class="val">82%</div><div class="sub"><span class="up">▲ 6%</span> vs last week</div></div>
-        <div class="card kpi"><div class="lbl">ADR</div><div class="val">€ 145</div><div class="sub">Average daily rate</div></div>
-        <div class="card kpi"><div class="lbl">RevPAR</div><div class="val">€ 119</div><div class="sub">Revenue per room</div></div>
-        <div class="card kpi"><div class="lbl">Revenue today</div><div class="val">€ 4,860</div><div class="sub">Rooms + restaurant</div></div>
-      </div>
-      <div class="grid k4" style="margin-top:16px">
-        <div class="card kpi"><div class="lbl">Arrivals</div><div class="val">12</div><div class="sub">Today</div></div>
-        <div class="card kpi"><div class="lbl">Departures</div><div class="val">9</div><div class="sub">Today</div></div>
-        <div class="card kpi"><div class="lbl">Breakfasts</div><div class="val">34</div><div class="sub">For tomorrow</div></div>
-        <div class="card kpi"><div class="lbl">Open tabs to rooms</div><div class="val">€ 1,240</div><div class="sub">Settled at check-out</div></div>
-      </div>
-      <div class="grid two" style="margin-top:16px">
-        <div class="card">
-          <div class="hd"><h3>Arrivals today</h3><span class="m">6 of 12</span></div>
-          <div class="bd" style="padding:6px 10px"><table id="arrTable"></table></div>
-        </div>
-        <div class="card">
-          <div class="hd"><h3>Guest chat</h3><span class="m">2 new</span></div>
-          <div class="bd">
-            <div class="msgs" id="miniMsgs" style="height:200px;background:#fff;padding:12px"></div>
-            <div class="note" style="padding:10px 0 0">Sample conversation — the guest writes, the front desk answers.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="view" id="v-arrivals">
-      <div class="card">
-        <div class="hd"><h3>Arrivals &amp; departures — today</h3><span class="m">Sample day</span></div>
-        <div class="bd" style="padding:6px 10px"><table id="arrTable2"></table></div>
-      </div>
-    </section>
-
-    <section class="view" id="v-charges">
-      <div class="card">
-        <div class="hd"><h3>Restaurant &amp; bar charges to rooms — today</h3><span class="m">Posted / check</span></div>
-        <div class="bd" style="padding:6px 10px"><table id="chTable"></table></div>
-      </div>
-      <div class="note">Charges are posted to the room and settled at check-out. A charge marked “Check” has not moved for a while and asks for a quick look.</div>
-    </section>
-
-    <section class="view" id="v-chat">
-      <div class="card chatwrap" style="overflow:hidden">
-        <div class="convlist" id="convList"></div>
-        <div class="chatpanel">
-          <div class="chathead">
-            <span class="avatar" id="chAv">G</span>
-            <div class="n"><b id="chName">Guest — Room 14</b><span id="chSub">Booking 2041 · 2 guests</span></div>
-            <span class="pill in">Guest chat</span>
-          </div>
-          <div class="msgs" id="msgs"></div>
-          <div class="chatbar">
-            <input id="chatIn" placeholder="Write a reply to the guest…">
-            <button class="btn" id="chatSend">Send</button>
-          </div>
-        </div>
-      </div>
-      <div class="note">Demo conversation with two sample messages: the guest asks, the front desk answers. Nothing is sent anywhere.</div>
-    </section>
-
-    <section class="view" id="v-reports">
-      <div class="grid k3">
-        <div class="card kpi"><div class="lbl">Revenue — this month</div><div class="val">€ 138,400</div><div class="sub"><span class="up">▲ 11%</span> vs last month</div></div>
-        <div class="card kpi"><div class="lbl">Restaurant share</div><div class="val">31%</div><div class="sub">Of total revenue</div></div>
-        <div class="card kpi"><div class="lbl">Average check</div><div class="val">€ 42</div><div class="sub">Per occupied room</div></div>
-      </div>
-      <div class="grid two" style="margin-top:16px">
-        <div class="card">
-          <div class="hd"><h3>Revenue by day (sample)</h3><span class="m">This week</span></div>
-          <div class="bd">
-            <div class="bars" id="bars"></div>
-            <div class="barlbl" id="barlbl"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="hd"><h3>By outlet — today</h3></div>
-          <div class="bd" style="padding:6px 10px"><table id="outTable"></table></div>
-        </div>
-      </div>
-    </section>
+    <div id="views"></div>
   </div>
 </div>
-
 <script>
-var NAV = [
-  ['today','Today','<path d="M4 12l8-8 8 8"/><path d="M6 10v10h12V10"/>'],
-  ['arrivals','Arrivals','<path d="M4 6h16v15H4z"/><path d="M4 10h16M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/>'],
-  ['charges','Charges','<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/><circle cx="17" cy="13" r="2.4"/>'],
-  ['chat','Guest chat','<path d="M4 5h16v11H8l-4 4z"/>'],
-  ['reports','Reports','<path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/>']
-];
-var ARR = [
-  ['Room 14','A. Smith','3','2','14:00','In house','€ 435.00'],
-  ['Room 22','L. García','2','4','15:30','Arriving','€ 620.00'],
-  ['Room 07','M. Müller','4','2','16:00','Arriving','€ 780.00'],
-  ['Room 31','G. Rossi','1','2','17:15','Arriving','€ 195.00'],
-  ['Room 05','P. Nowak','5','3','18:00','Arriving','€ 940.00'],
-  ['Room 18','E. Dupont','2','2','19:30','Arriving','€ 360.00']
-];
-var CH = [
-  ['12:40','Restaurant','Room 14','Lunch ×2, wine','€ 46.00','Posted'],
-  ['13:05','Bar','Room 07','Beers ×4','€ 20.00','Posted'],
-  ['14:10','Restaurant','Room 22','Family lunch','€ 88.50','Posted'],
-  ['15:20','Excursions','Room 05','Boat trip ×2','€ 60.00','Posted'],
-  ['16:05','Bar','Room 31','Drinks','€ 14.00','Check']
-];
-var CHAT = [
-  {me:false,name:'Guest — Room 14',av:'S',t:'Hi! Could we get two extra breakfasts tomorrow morning, around 08:30?',w:'10:24'},
-  {me:true,name:'Front desk',av:'FD',t:'Of course — I have added 2 breakfasts for tomorrow at 08:30. Anything else?',w:'10:26'}
-];
-var CONVS = [
-  ['Guest — Room 14','Yes, thank you!',true],
-  ['Guest — Room 22','What time is check-out?',false],
-  ['Guest — Room 07','Can we book a taxi?',false]
-];
+/* ============================================================
+   ICONS
+   ============================================================ */
+function ic(n){
+  var p={
+   arrivals:'<path d="M4 18h16M7 18V7l5-3 5 3v11M10 12h4"/>',
+   dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+   compare:'<path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>',
+   detail:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+   guests:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 11a3 3 0 1 0 0-6M18 20a5 5 0 0 0-3-4.6"/>',
+   rates:'<path d="M3 17l5-6 4 3 5-8 4 4"/><path d="M3 21h18"/>',
+   breakfast:'<path d="M4 8h16M6 8V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v2M5 8v9a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8"/>',
+   reports:'<path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>',
+   upcoming:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+   grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+   fishing:'<path d="M3 12c4-5 14-5 18 0-4 5-14 5-18 0z"/><circle cx="9" cy="12" r="1.5"/><path d="M15 8l4-4"/>',
+   occupancy:'<path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/>',
+   payroll:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.6h-4a1.8 1.8 0 0 0 0 3.6h4"/>',
+   campaigns:'<path d="M3 11l16-6v14L3 13z"/><path d="M7 12.5V18a2 2 0 0 0 2 2h1v-5"/>',
+   breakdowns:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/>',
+   api:'<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/>',
+   chat:'<path d="M21 12a8 8 0 0 1-11.6 7.2L4 20l1-4.4A8 8 0 1 1 21 12z"/>',
+   charges:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 14h6M7 17h4"/>',
+   about:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'
+  };
+  return '<svg viewBox="0 0 24 24">'+(p[n]||p.about)+'</svg>';
+}
 
-function icon(p){ return '<svg viewBox="0 0 24 24">'+p+'</svg>'; }
-function nav(){
-  document.getElementById('nav').innerHTML = NAV.map(function(n){
-    var badge = n[0]==='chat' ? '<span class="badge">2</span>' : '';
-    return '<button data-v="'+n[0]+'">'+icon(n[2])+'<span>'+n[1]+'</span>'+badge+'</button>';
-  }).join('');
-  document.querySelectorAll('nav.side button').forEach(function(b){ b.onclick = function(){ location.hash = b.dataset.v; }; });
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function note(t,body,kind){
+  return '<div class="note '+(kind||'')+'"><div class="nh">'+ic('about')+'<span>'+t+'</span></div><div class="nb">'+body+'</div></div>';
 }
-function route(){
-  var n = (location.hash||'#today').slice(1);
-  if(!document.getElementById('v-'+n)) n='today';
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('on', v.id==='v-'+n); });
-  document.querySelectorAll('nav.side button').forEach(function(b){ b.classList.toggle('on', b.dataset.v===n); });
-  var t=(NAV.filter(function(x){return x[0]===n})[0]||NAV[0])[1];
-  document.getElementById('ttl').textContent = t;
+function card(title,meta,body,cls){
+  return '<div class="card '+(cls||'')+'"><div class="hd"><h3>'+title+'</h3>'+(meta?'<span class="m">'+meta+'</span>':'')+'</div><div class="bd">'+body+'</div></div>';
 }
-function arrRows(){
-  return '<tr><th>Room</th><th>Guest</th><th class="num">Nights</th><th class="num">Guests</th><th>Arrival</th><th>Status</th><th class="num">Balance</th></tr>'
-    + ARR.map(function(a){
-      var st = a[5]==='In house' ? '<span class="pill in">In house</span>' : '<span class="pill ok">Arriving</span>';
-      return '<tr><td><b>'+a[0]+'</b></td>'
-        + '<td><div class="gname"><span class="avatar">'+a[1].split(' ').pop()[0]+'</span><div><b>'+a[1]+'</b></div></div></td>'
-        + '<td class="num">'+a[2]+'</td><td class="num">'+a[3]+'</td><td>'+a[4]+'</td><td>'+st+'</td><td class="num">'+a[6]+'</td></tr>';
-    }).join('');
+function kpi(lbl,val,sub){ return '<div class="card kpi"><div class="lbl">'+lbl+'</div><div class="val">'+val+'</div><div class="sub">'+(sub||'')+'</div></div>'; }
+function av(name){
+  var p=(name||'?').trim().split(/\s+/); var s=(p[p.length-1]||'?')[0].toUpperCase();
+  return '<span class="avatar">'+s+'</span>';
 }
-function chRows(){
-  return '<tr><th>Time</th><th>Outlet</th><th>Room</th><th>Items</th><th class="num">Amount</th><th>Status</th></tr>'
-    + CH.map(function(c){
-      var st = c[5]==='Posted' ? '<span class="pill ok">Posted</span>' : '<span class="pill check">Check</span>';
-      return '<tr><td>'+c[0]+'</td><td>'+c[1]+'</td><td><b>'+c[2]+'</b></td><td>'+c[3]+'</td><td class="num">'+c[4]+'</td><td>'+st+'</td></tr>';
-    }).join('');
+function rows(head,data){
+  function ch(c){ return (c&&c.h!==undefined)?c.h:(''+(c===undefined||c===null?'':c)); }
+  function isNum(h){ var s=(''+h).trim(); return !!s && s.indexOf('<')<0 &&
+      (/^€/.test(s)||/%$/.test(s)||/^\d{1,3}(,\d{3})*$/.test(s)||/^\d+$/.test(s)); }
+  var t=head.map(function(x){return (x&&x.h!==undefined)?x.h:(x&&x[0]!==undefined?x[0]:'');});
+  var numCol=[];
+  for(var j=0;j<t.length;j++){
+    var any=false,all=true;
+    for(var i=0;i<data.length;i++){ var s=ch(data[i][j]); if(s==='') continue; any=true; if(!isNum(s)){all=false;break;} }
+    numCol[j]=any&&all;
+  }
+  var h='<tr>'+head.map(function(x,j){
+    var n=numCol[j] || (x&&x.n!==undefined?x.n:(x&&x[1]));
+    return '<th'+(n?' class="num"':'')+'>'+t[j]+'</th>';
+  }).join('')+'</tr>';
+  var b=data.map(function(r){return '<tr>'+r.map(function(c,j){
+    var n=numCol[j] || (c&&c.n!==undefined?c.n:0);
+    return '<td'+(n?' class="num"':'')+'>'+ch(c)+'</td>';
+  }).join('')+'</tr>';}).join('');
+  return '<table>'+h+b+'</table>';
 }
-function outRows(){
-  var d=[['Rooms','€ 3,100','64%'],['Restaurant','€ 980','20%'],['Bar','€ 540','11%'],['Excursions','€ 240','5%']];
-  return '<tr><th>Outlet</th><th class="num">Revenue</th><th class="num">Share</th></tr>'
-    + d.map(function(x){ return '<tr><td>'+x[0]+'</td><td class="num">'+x[1]+'</td><td class="num">'+x[2]+'</td></tr>'; }).join('');
+function bars(items){
+  var max=Math.max.apply(null,items.map(function(i){return i[1];}));
+  return '<div class="bars">'+items.map(function(i){
+    return '<div class="col"><div class="cv">'+i[2]+'</div><div class="cb" style="height:'+Math.round(i[1]/max*140)+'px"></div><div class="cl">'+i[0]+'</div></div>';
+  }).join('')+'</div>';
 }
-function msgsHtml(list){
-  return list.map(function(m){
-    return '<div class="msg '+(m.me?'me':'them')+'">'+esc(m.t)+'<span class="w">'+(m.me?'Front desk · ':'Guest · ')+m.w+'</span></div>';
-  }).join('');
+
+/* ============================================================
+   SCREEN CONTENT
+   ============================================================ */
+var V={};
+
+/* -------- Arrivals on date -------- */
+V.arrivals=function(){
+  return '<div class="panelhead">'+
+    '<div class="tabs"><span class="tab on">Today</span><span class="tab">Tomorrow</span></div>'+
+    '<span class="muted">Wednesday, 25 November</span>'+
+    '<button class="btn n s" style="margin-left:auto">Copy list for WhatsApp</button>'+
+    '<button class="btn n s">Save to Word</button>'+
+    '<button class="btn g s">Refresh</button></div>'+
+  card('Arrivals &amp; departures — today','12 arrivals',
+    rows([['Object'],['Guest'],['Nights',1],['Guests',1],['Arrival'],['Status'],['Balance',1]],
+    [
+      ['Bungalow 14',{h:'<span class="gname">'+av('A. Smith')+'<span class="txt"><b>A. Smith</b><span>+44 7... · 2 adults</span></span></span>','n':0},'3','2','14:00','<span class="pill in">In house</span>','€ 435.00'],
+      ['Bungalow 22','<span class="gname">'+av('L. Garcia')+'<span class="txt"><b>L. Garcia</b><span>bathhouse · transfer</span></span></span>','2','4','15:30','<span class="pill ok">Arriving</span>','€ 620.00'],
+      ['Villa tent 07','<span class="gname">'+av('M. Müller')+'<span class="txt"><b>M. Müller</b><span>no phone yet</span></span></span>','4','2','16:00','<span class="pill ok">Arriving</span>','€ 780.00'],
+      ['Safari tent 31','<span class="gname">'+av('G. Rossi')+'<span class="txt"><b>G. Rossi</b><span>fishing, 2 anglers</span></span></span>','1','2','17:15','<span class="pill ok">Arriving</span>','€ 195.00'],
+      ['Bungalow 05','<span class="gname">'+av('P. Nowak')+'<span class="txt"><b>P. Nowak</b><span>hot tub</span></span></span>','5','3','18:00','<span class="pill ok">Arriving</span>','€ 940.00'],
+      ['Tent 18','<span class="gname">'+av('E. Dupont')+'<span class="txt"><b>E. Dupont</b><span>car parking</span></span></span>','2','2','19:30','<span class="pill ok">Arriving</span>','€ 360.00']
+    ])
+  )+
+  '<div style="height:16px"></div>'+
+  card('Messages to guests','ready to send',
+    '<p class="muted" style="margin:0 0 10px">Arrival text with the address, check-in time and breakfast hours. Copy it and send — nothing goes out automatically, you confirm the send.</p>'+
+    '<div class="row"><button class="btn n s">Preview text</button><button class="btn g s">Copy text</button></div>')+
+  note('How this works',
+    'Arrivals are loaded <b>automatically from your booking system (TravelLine)</b> — the program reads them through the API, so nobody types them in. '+
+    'The list can be copied in one click for WhatsApp/MAX or saved as a Word file for the reception desk.');
+};
+
+/* -------- Dashboard -------- */
+V.dashboard=function(){
+  return '<div class="panelhead">'+
+    '<button class="btn n s">Upload TravelLine file</button>'+
+    '<button class="btn g s" style="margin-left:auto">Sync with TravelLine</button></div>'+
+  '<div class="grid k4">'+
+    kpi('Revenue','€ 412,600','all time')+
+    kpi('Bookings','1,248','unique')+
+    kpi('Nights','3,910','sold')+
+    kpi('Breakfasts','6,240','portions')+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  '<div class="grid k3">'+
+    kpi('Avg. check','€ 330','per booking')+
+    kpi('ADR','€ 105','price per night')+
+    kpi('RevPAR','€ 71','per object per night')+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  '<div class="grid two">'+
+    card('Revenue by week','€ / week',bars([
+      ['W38',11800,'€11.8k'],['W39',13200,'€13.2k'],['W40',10400,'€10.4k'],['W41',14900,'€14.9k'],['W42',16200,'€16.2k'],['W43',13800,'€13.8k'],['W44',17100,'€17.1k']]))+
+    card('Revenue structure','by tariff',(function(){
+      var d=[['Direct',42],['Aggregators',33],['Breakfasts',14],['Extras',11]];
+      var cl=['#12b886','#3b82f6','#e8833a','#8b7cf6'];
+      var g='conic-gradient(';var acc=0;var parts=[];
+      d.forEach(function(x,i){parts.push(cl[i]+' '+acc+'% '+(acc+x[1])+'%');acc+=x[1];});
+      return '<div class="pie"><div class="donut" style="background:conic-gradient('+parts.join(',')+')"></div><div class="legend">'+
+        d.map(function(x,i){return '<div><i style="background:'+cl[i]+'"></i>'+x[0]+'<b>'+x[1]+'%</b></div>';}).join('')+'</div></div>';
+    })())+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  card('Smart analysis — this month','',
+    '<p style="margin:0;font-size:13.5px;color:#33415c">November is <b>11% above</b> October. Occupancy is 82% on weekends; the mid-week dip is the main growth opportunity. Average length of stay is 2.4 nights. Direct bookings rose to 42% of revenue. Note: 3 bookings are missing an object number — load an ArrivalsReport to fix them.</p>')+
+  note('How this works',
+    'These figures are <b>calculated by the program from your bookings</b> — nothing is entered by hand. '+
+    'The formulas are standard: <code>ADR = revenue ÷ nights sold</code>, <code>RevPAR = revenue ÷ (objects × nights)</code>, <code>Avg. check = revenue ÷ bookings</code>. '+
+    'Bookings come from TravelLine <b>via the API</b> (or from a file you upload). The charts update as soon as new bookings arrive.');
+};
+
+/* -------- Compare -------- */
+V.compare=function(){
+  return '<div class="panelhead">'+
+    '<span class="muted">Period 1</span><span class="field" style="width:auto">Nov 2026</span>'+
+    '<span class="muted">vs</span><span class="field" style="width:auto">Nov 2025</span>'+
+    '<button class="btn g s">Compare</button></div>'+
+  card('Comparison','change (2 → 1)',
+    rows([['Indicator'],[{h:'Nov 2026',n:1}],[{h:'Nov 2025',n:1}],[{h:'Δ',n:1}]],[
+      ['Revenue','€ 41,200','€ 37,000','<span class="pill ok">+11%</span>'],
+      ['Bookings','128','121','<span class="pill ok">+6%</span>'],
+      ['Nights','402','388','<span class="pill ok">+4%</span>'],
+      ['Avg. length of stay','3.1','3.2','<span class="pill check">-3%</span>'],
+      ['ADR','€ 102','€ 95','<span class="pill ok">+7%</span>'],
+      ['RevPAR','€ 74','€ 68','<span class="pill ok">+9%</span>']
+    ]))+
+  note('How this works',
+    'Pick any two periods — the program lines them up and shows the change in each indicator. Handy before a price review or an owners\u2019 meeting.');
+};
+
+/* -------- Analytics detail -------- */
+V.detail=function(){
+  return '<div class="grid k4">'+
+    kpi('Booking depth','38 days','average, ahead of arrival')+
+    kpi('Early bookings','31%','more than 30 days ahead')+
+    kpi('Last-minute','12%','less than 3 days ahead')+
+    kpi('Avg. stay','2.4 nights','')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Revenue by source','',rows([['Source'],['Revenue'],[{h:'Share',n:1}]],[
+      ['Direct',{h:'€ 173,300','n':0},'42%'],
+      ['Booking.com','€ 111,400','27%'],
+      ['Airbnb','€ 61,900','15%'],
+      ['Expedia','€ 41,300','10%'],
+      ['Other','€ 24,700','6%']]))+
+    card('Booking depth','days before arrival',bars([['0-2',12,'12%'],['3-7',22,'22%'],['8-14',19,'19%'],['15-30',16,'16%'],['31-60',18,'18%'],['60+',13,'13%']]))+
+  '</div>'+
+  note('How this works',
+    'Deeper analytics on the same bookings: where guests come from, how far ahead they book, which weekday peaks. All of it is derived from the booking data — no extra input.');
+};
+
+/* -------- Guests -------- */
+V.guests=function(){
+  return '<div class="grid k3">'+
+    kpi('Unique guests','864','all time')+
+    kpi('Repeat guests','213','booked more than once')+
+    kpi('Top-10 share','18%','of revenue')+
+  '</div><div style="height:16px"></div>'+
+  card('Top-10 returning guests','sort: by revenue',
+    rows([['Guest'],['Visits',1],['Nights',1],['Revenue',1],['Last visit']],[
+      ['E. Osolovskaya','9','24','€ 6,120','12 Nov 2026'],
+      ['A. Smith','7','19','€ 4,980','25 Nov 2026'],
+      ['M. Müller','6','22','€ 4,410','25 Nov 2026'],
+      ['L. Garcia','5','13','€ 3,120','25 Nov 2026'],
+      ['P. Nowak','5','17','€ 2,960','25 Nov 2026']
+    ]))+
+  note('How this works',
+    'The program groups bookings by guest and counts repeat visits, nights and revenue. Useful for thank-you offers to your best customers.');
+};
+
+/* -------- Rates & occupancy -------- */
+V.rates=function(){
+  return '<div class="grid k3">'+
+    kpi('Average ADR','€ 105','of the period')+
+    kpi('Nights sold','3,910','all time')+
+    kpi('Occupancy','74%','object-nights sold')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('ADR by month','€ / night',bars([['Jul',128,'128'],['Aug',134,'134'],['Sep',112,'112'],['Oct',98,'98'],['Nov',102,'102']]))+
+    card('ADR and occupancy','by month',bars([['Jul',96,'96%'],['Aug',99,'99%'],['Sep',88,'88%'],['Oct',72,'72%'],['Nov',74,'74%']]))+
+  '</div>'+
+  note('How this works',
+    'Rate and occupancy side by side, so you can see whether a higher price cost you occupancy — or gained you revenue. Calculated from the loaded bookings.');
+};
+
+/* -------- Breakfasts -------- */
+V.breakfasts=function(){
+  return '<div class="panelhead"><span class="muted">From</span><span class="field" style="width:auto">23.11.2026</span>'+
+    '<span class="muted">to</span><span class="field" style="width:auto">30.11.2026</span>'+
+    '<button class="btn g s">Apply</button><button class="btn n s" style="margin-left:auto">Export to Excel for the kitchen</button></div>'+
+  card('Breakfast plan by date','34 portions',
+    rows([['Date'],['Object'],['Portions',1]],[
+      ['23.11','Bungalow 14','2'],['23.11','Bungalow 22','4'],['23.11','Villa tent 07','2'],
+      ['23.11','Safari tent 31','2'],['23.11','Bungalow 05','3'],['23.11','Tent 18','2'],
+      ['24.11','Bungalow 14','2'],['24.11','Bungalow 05','3'],
+      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'<b>34</b>','n':1}]
+    ]))+
+  note('How this works',
+    'Every booking that includes breakfast becomes a number of portions per date — the kitchen gets a ready plan and an Excel file. No more counting by hand.');
+};
+
+/* -------- Reports -------- */
+V.reports=function(){
+  return '<div class="panelhead"><span class="muted">Quick period</span>'+
+    '<div class="tabs"><span class="tab on">Last week</span><span class="tab">This month</span><span class="tab">Year to date</span><span class="tab">Custom</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Generate Excel report</button>'+
+    '<button class="btn g s">Copy owner\u2019s report</button></div>'+
+  card('Owner\u2019s report — preview','',
+    '<div style="background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;white-space:pre-line">REPORT 01–07 Nov 2026\n\n  Total revenue        € 9,880\n  Bookings             32\n  Guests               71\n  Nights               84\n  Breakfasts           62\n  Average check        € 309\n  ADR (per night)      € 118\n  RevPAR (per object)  € 82\n\n  Direct / Aggregators / Breakfasts\n  Structure of sales by channel</div>')+
+  note('How this works',
+    'Reports for the owner build themselves from the same data — one click to copy the text into WhatsApp/Telegram, or to get a ready Excel file with a summary, a chart and a day-by-day breakdown.');
+};
+
+/* -------- Upcoming -------- */
+V.upcoming=function(){
+  return '<div class="grid k4">'+
+    kpi('Booked','412','object-nights')+
+    kpi('Avg. occupancy','58%','next 6 months')+
+    kpi('Free nights','1,120','next 6 months')+
+    kpi('Avg. check','€ 340','')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Occupancy forecast','by month',bars([['Dec',41,'41%'],['Jan',33,'33%'],['Feb',38,'38%'],['Mar',52,'52%'],['Apr',66,'66%'],['May',78,'78%']]))+
+    card('Next 7 days','objects booked per day',bars([['Mon',14,'14'],['Tue',12,'12'],['Wed',16,'16'],['Thu',19,'19'],['Fri',24,'24'],['Sat',26,'26'],['Sun',18,'18']]))+
+  '</div><div style="height:16px"></div>'+
+  card('Top-10 upcoming bookings by amount','',rows([['Arrival'],['Guest'],['Object'],['Amount',1]],[
+    ['08 Dec','E. Osolovskaya','Bungalow 14','€ 4,200'],
+    ['15 Dec','M. Müller','Villa tent 07','€ 3,780'],
+    ['22 Dec','A. Smith','Bungalow 22','€ 3,100'],
+    ['29 Dec','L. Garcia','Bungalow 05','€ 2,760']
+  ]))+
+  note('How this works',
+    'The forecast is built from bookings that are already in the system — it shows how full the coming months look and where there is room to sell.');
+};
+
+/* -------- Grid (chess) -------- */
+V.grid=function(){
+  var days=['Mon 23','Tue 24','Wed 25','Thu 26','Fri 27','Sat 28','Sun 29'];
+  var data=[
+    ['Bungalow 14',['b','b','b','f','f','b','b']],
+    ['Bungalow 22',['f','b','b','b','b','b','f']],
+    ['Bungalow 05',['b','b','b','b','d','d','b']],
+    ['Bungalow 31',['f','f','b','b','b','f','f']],
+    ['Villa tent 07',['b','b','f','f','b','b','b']],
+    ['Safari tent 12',['f','b','b','b','b','f','f']],
+    ['Tent 18',['b','f','f','b','b','b','f']]
+  ];
+  var cls={f:'free',b:'busy',d:'dens'};
+  var head='<div class="gridcells" style="grid-template-columns:150px repeat(7,1fr)">'+
+    '<div class="h"></div>'+days.map(function(d){return '<div class="h">'+d+'</div>';}).join('');
+  data.forEach(function(r){
+    head+='<div class="r">'+r[0]+'</div>'+r[1].map(function(c){return '<div class="cell '+cls[c]+'">'+(c==='f'?'':'●')+'</div>';}).join('');
+  });
+  head+='</div>';
+  return '<div class="panelhead"><span class="muted">Week 23–29 Nov</span>'+
+    '<span style="margin-left:auto" class="muted">'
+    +'<span class="pill ok">Busy</span> <span class="pill in">Occupied</span> <span class="pill">Free</span></span></div>'+
+  card('Tent rental — by days','click a free cell to book, a busy one to open it',head)+
+  note('How this works',
+    'The grid is your tent and fishing rentals on a timeline: green is busy, grey is free. Click a free cell to create a booking, click a busy one to open it. The same screen prints a PDF voucher for the guest.');
+};
+
+/* -------- Fishing -------- */
+V.fishing=function(){
+  return '<div class="grid k3">'+
+    kpi('Fishing sold','318','tickets, this season')+
+    kpi('Revenue','€ 9,540','from fishing')+
+    kpi('Avg. per company','€ 30','')+
+  '</div><div style="height:16px"></div>'+
+  card('Fishing — by days','',rows([['Date'],['Companies',1],['Guests',1],['Amount',1]],[
+    ['25 Nov','6','14','€ 420'],
+    ['26 Nov','4','9','€ 270'],
+    ['27 Nov','7','16','€ 480'],
+    ['28 Nov','9','21','€ 630'],
+    ['29 Nov','8','18','€ 540']
+  ]))+
+  note('How this works',
+    'Fishing tickets are counted separately from the tents, so you always see how much the fishing itself earns.');
+};
+
+/* -------- Tent occupancy -------- */
+V.occupancy=function(){
+  return '<div class="panelhead"><span class="muted">Period</span>'+
+    '<span class="field" style="width:auto">01.11.2026</span><span class="muted">to</span>'+
+    '<span class="field" style="width:auto">30.11.2026</span>'+
+    '<button class="btn g s">Calculate</button><button class="btn n s" style="margin-left:auto">Export to Excel</button></div>'+
+  card('Occupancy and revenue by object','28 objects · 30 days',
+    rows([['Object'],['Days busy',1],['Days total',1],['Occupancy',1],['Revenue',1]],[
+      ['Bungalow 14','22','30','73%','€ 2,640'],
+      ['Bungalow 22','18','30','60%','€ 2,160'],
+      ['Bungalow 05','25','30','83%','€ 3,125'],
+      ['Villa tent 07','20','30','67%','€ 3,000'],
+      ['Safari tent 12','16','30','53%','€ 1,920'],
+      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'','n':0},{h:'<b>74%</b>','n':1},{h:'<b>€ 41,200</b>','n':1}]
+    ]))+
+  note('How this works',
+    'For any period the program calculates how many days each object was occupied and how much it earned. Export to Excel in one click.');
+};
+
+/* -------- Payroll -------- */
+V.payroll=function(){
+  return '<div class="panelhead"><button class="btn n s">‹</button><span class="muted">November 2026</span><button class="btn n s">›</button>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Table</span><span class="tab">Statistics</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Staff list…</button></div>'+
+  card('Accruals for the month','',
+    rows([['Employee'],['Position'],['Salary',1],['Days',1],['Accrued',1],['Paid',1],['Balance',1]],[
+      ['Ivan Petrov','Manager','€ 900','26/30','€ 780','€ 780','€ 0'],
+      ['Maria Ivanova','Housekeeping','€ 700','28/30','€ 653','€ 300','<span class="pill warn">€ 353</span>'],
+      ['Sergey Kuznetsov','Chef','€ 850','24/30','€ 680','€ 680','€ 0'],
+      ['Anna Smirnova','Waitress','€ 650','22/30','€ 477','€ 200','<span class="pill warn">€ 277</span>'],
+      ['Dmitry Orlov','Technician','€ 600','20/30','€ 400','€ 400','€ 0']
+    ]))+
+  '<div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Month summary','',rows([['Item'],[{h:'Amount',n:1}]],[
+      ['Total accrued','€ 2,990'],['Paid','€ 2,360'],['<b>Balance to pay</b>','<b>€ 630</b>'],['Active staff','5']
+    ]))+
+    card('Manager taxes','official part € 500',rows([['Tax'],[{h:'Amount',n:1}]],[
+      ['Income tax (13%)','€ 65'],['Social contributions (30%)','€ 150'],['<b>Total per month</b>','<b>€ 215</b>']
+    ]))+
+  '</div>'+
+  note('How this works',
+    'Staff, salaries and worked days are kept here. You mark the days worked on a calendar, add payments as they happen, and the program shows the <b>accrued amount, what is paid and the balance</b>. '+
+    'For the manager it also calculates the <b>taxes (13% + 30%)</b> automatically. A month-by-month view shows any remaining debts.');
+};
+
+/* -------- Campaigns (Yandex.Direct) -------- */
+V.campaigns=function(){
+  return '<div class="panelhead"><span class="muted">Period</span><span class="field" style="width:auto">Last 30 days</span>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">All</span><span class="tab">Running</span><span class="tab">Problem</span></div>'+
+    '<button class="btn g s" style="margin-left:auto">Refresh now</button></div>'+
+  '<div class="grid k4">'+
+    kpi('Spend','€ 1,240','period')+
+    kpi('Clicks','3,410','')+
+    kpi('Conversions','128','')+
+    kpi('Revenue','€ 9,880','from ads')+
+  '</div><div style="height:16px"></div>'+
+  card('Campaign performance','campaigns: 7',
+    rows([['Campaign'],['State'],['Spend',1],['Clicks',1],['Conv.',1],['ROAS',1]],[
+      ['Search — glamping',{h:'<span class="pill ok">Running</span>','n':0},'€ 520','1,640','62','4.1'],
+      ['Search — tents',{h:'<span class="pill ok">Running</span>','n':0},'€ 380','1,020','38','3.4'],
+      ['Retargeting',{h:'<span class="pill warn">Moderation</span>','n':0},'€ 210','540','19','2.9'],
+      ['Network — brand',{h:'<span class="pill check">Paused</span>','n':0},'€ 130','210','9','1.8']
+    ]))+
+  note('How this works',
+    'Advertising figures come straight from the <b>Yandex.Direct API</b> — the program reads them itself, no screenshots or spreadsheets. You see spend, clicks, conversions and return on each campaign, and can dig into any of them.');
+};
+
+/* -------- Breakdowns -------- */
+V.breakdowns=function(){
+  return '<div class="panelhead"><span class="muted">Campaign</span><span class="field" style="width:auto">Search — glamping</span>'+
+    '<button class="btn n s" style="margin-left:auto">Export CSV</button><button class="btn g s">Refresh</button></div>'+
+  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Search queries</span><span class="tab">Sites</span><span class="tab">Devices</span><span class="tab">Geo</span><span class="tab">Show conditions</span></div>'+
+  card('Search queries','rows: 46',
+    rows([['Query'],['Match'],['Impr.',1],['Clicks',1],['Spend',1],['Conv.',1]],[
+      ['glamping near me','phrase','4,120','210','€ 64','9'],
+      ['tent camp weekend','phrase','2,880','164','€ 51','6'],
+      ['family holiday nature','broad','3,540','142','€ 44','5'],
+      ['fishing weekend','exact','1,960','98','€ 31','4']
+    ]))+
+  note('How this works',
+    'Breakdowns show which search queries, sites, devices and regions actually bring bookings, so you can cut what does not work and add budget where it does.');
+};
+
+/* -------- API access -------- */
+V.api=function(){
+  return '<div class="grid twoe">'+
+    card('Access to the API','',
+      '<p class="muted" style="margin:0 0 10px">Your own token, stored locally on your computer and never printed in the log.</p>'+
+      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="y0_AgAAAA••••••••" style="flex:1"><button class="btn n s">Show</button><button class="btn g s">Check</button></div>'+
+      '<div class="muted" style="margin-bottom:14px">Login: your-client-login</div>'+
+      rows([['Item'],['Value']],[
+        ['Token','stored (encrypted, local)'],
+        ['Storage','settings file on this computer'],
+        ['Last update','25 Nov 2026, 09:12'],
+        ['Account balance','€ 118.40'],
+        ['API points','2,450 left']
+      ]))+
+    card('Status','',note('Privacy','The token stays on your computer. The program only calls the Yandex API and shows exactly what the network answered. It is never sent anywhere else.','gr'))+
+  '</div>'+
+  note('How this works',
+    'This screen keeps the Direct token and shows where the data comes from. Everything is local to your machine — safe to show.');
+};
+
+/* -------- Guest messages (chat) -------- */
+V.chat=function(){
+  return '<div class="grid two" style="gap:16px">'+
+   '<div class="card"><div class="chatwrap">'+
+    '<div class="convlist">'+
+      '<div class="conv on">'+av('A. Smith')+'<div class="t"><b>Room 14 — A. Smith</b><small>Hi! Could we get two extra breakfasts…</small></div><span class="dot"></span></div>'+
+      '<div class="conv">'+av('L. Garcia')+'<div class="t"><b>Room 22 — L. Garcia</b><small>What time is check-out?</small></div></div>'+
+      '<div class="conv">'+av('M. Müller')+'<div class="t"><b>Room 07 — M. Müller</b><small>Can we book a taxi?</small></div></div>'+
+    '</div>'+
+    '<div><div class="thread">'+
+      '<div class="msg g"><b>A. Smith · Room 14</b><br>Hi! Could we get two extra breakfasts tomorrow morning, around 08:30?<time>Guest · 10:24 · sent from the guest app</time></div>'+
+      '<div class="msg m"><b>Front desk</b><br>Of course — I have added 2 breakfasts for tomorrow at 08:30. Anything else?<time>Front desk · 10:26</time></div>'+
+    '</div><div class="composer"><input placeholder="Write a reply to the guest…"><button class="btn g">Send</button></div></div>'+
+   '</div></div>'+
+   '<div class="card"><div class="hd"><h3>Connected</h3><span class="m">Live</span></div><div class="bd">'+
+     rows([['Item'],['Value']],[
+       ['Channel','Guest app (web)'],
+       ['Language','English / Greek / German'],
+       ['Replies reach','guest\u2019s phone'],
+       ['Owner sees','same conversation']
+     ])+
+   '</div></div>'+
+  '</div>'+
+  note('Demo conversation',
+    'These two messages are a <b>sample</b> — nothing is sent anywhere. In the real product this is the two-way chat: <b>the guest writes from YOUR web app</b> (the guest guide you give them on arrival), and the message lands here at the front desk. The guest sees the reply on their phone, in their own language.','gr');
+};
+
+/* -------- Charges to rooms (concept) -------- */
+V.charges=function(){
+  return '<div class="panelhead"><span class="chip">Concept</span><span class="muted">Synchronisation to be agreed</span></div>'+
+  card('Restaurant &amp; bar charges to rooms — today','posted / check',
+    rows([['Time'],['Outlet'],['Room'],['Items'],['Amount',1],['Status']],[
+      ['12:40','Restaurant','Room 14','Lunch ×2, wine','€ 46.00','<span class="pill ok">Posted</span>'],
+      ['13:05','Bar','Room 07','Beers ×4','€ 20.00','<span class="pill ok">Posted</span>'],
+      ['14:10','Restaurant','Room 22','Family lunch','€ 88.50','<span class="pill ok">Posted</span>'],
+      ['15:20','Excursions','Room 05','Boat trip ×2','€ 60.00','<span class="pill ok">Posted</span>'],
+      ['16:05','Bar','Room 31','Drinks','€ 14.00','<span class="pill check">Check</span>']
+    ]))+
+  '<div style="height:16px"></div>'+
+  '<div class="grid k4">'+
+    kpi('Step 1','Order','waiter takes it on a tablet')+
+    kpi('Step 2','Kitchen','order appears in the kitchen')+
+    kpi('Step 3','To the room','charge is posted to the room')+
+    kpi('Step 4','Check-out','settled in one bill')+
+  '</div>'+
+  note('How this works',
+    'The guest orders, the charge goes onto their room, and at check-out it is settled together with the stay. A charge marked <b>“Check”</b> has not moved for a while — the program flags it so nothing is lost. '+
+    'This is a <b>concept screen</b>: the exact synchronisation with your restaurant system is agreed during the setup.','am');
+};
+
+/* -------- About this demo -------- */
+V.about=function(){
+  return '<div class="grid twoe">'+
+    card('About this demo','',note('Stand-alone demo',
+      'This is a <b>stand-alone demo</b> with <b>sample data only</b>. It is not connected to any real system and shows nothing from a live database — safe to show to anyone.',
+      'gr'))+
+    card('Your programme, your way','',
+      '<ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.7">'+
+      '<li>Every screen can be <b>tuned to your needs</b> — your objects, your tariffs, your reports.</li>'+
+      '<li>Delivered as a <b>web app</b> (any browser) or a <b>desktop app for Windows and Mac</b>.</li>'+
+      '<li>Data comes from your booking system <b>via the API</b> — nothing is typed twice.</li>'+
+      '<li>Interface language: <b>English, Greek, German</b> — as many as you like.</li>'+
+      '<li>Works offline on a laptop as well as online.</li>'+
+      '</ul>')+
+  '</div>'+
+  note('What a client sees',
+    'On every screen there is a blue “How this works” note. They explain where the numbers come from and how they are calculated, so a client understands the product without anyone standing next to them.');
+};
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+var SEC=[
+ {t:'Arrivals on date', items:[['arrivals','Arrivals','arrivals']]},
+ {t:'Booking analytics', items:[
+   ['dashboard','Dashboard','dashboard'],['compare','Compare','compare'],
+   ['detail','Analytics detail','detail'],['guests','Guests','guests'],
+   ['rates','Rates & occupancy','rates'],['breakfasts','Breakfasts','breakfast'],
+   ['reports','Reports','reports'],['upcoming','Upcoming','upcoming']]},
+ {t:'Tent rental + Fishing', items:[
+   ['grid','Grid','grid'],['fishing','Fishing','fishing'],['occupancy','Tent occupancy','occupancy']]},
+ {t:'Salaries', items:[['payroll','Payroll','payroll']]},
+ {t:'Yandex.Direct', items:[
+   ['campaigns','Campaigns','campaigns'],['breakdowns','Breakdowns','breakdowns'],['api','API access','api']]},
+ {t:'Guests', items:[['chat','Messages','chat']]},
+ {t:'Concept', items:[['charges','Charges to rooms','charges']]},
+ {t:'', items:[['about','About this demo','about']]}
+];
+var TITLES={arrivals:'Arrivals on date',dashboard:'Dashboard',compare:'Compare periods',detail:'Analytics detail',
+ guests:'Returning guests',rates:'Rates & occupancy',breakfasts:'Breakfast plan',reports:'Owner\u2019s reports',
+ upcoming:'Upcoming bookings',grid:'Tent grid',fishing:'Fishing',occupancy:'Tent occupancy',payroll:'Payroll',
+ campaigns:'Campaigns',breakdowns:'Breakdowns',api:'API access',chat:'Guest messages',charges:'Charges to rooms',
+ about:'About this demo'};
+var SUBS={arrivals:'Wednesday, 25 November 2026',payroll:'November 2026',chat:'2 new messages',
+ charges:'concept',dashboard:'all time'};
+
+function renderNav(){
+  var h='';
+  SEC.forEach(function(s){
+    h+='<div class="sect">'+(s.t?'<div class="st">'+s.t+'</div>':'');
+    s.items.forEach(function(it){
+      h+='<button data-k="'+it[0]+'">'+ic(it[2])+'<span>'+it[1]+'</span>'+
+         (it[0]==='chat'?'<span class="badge">2</span>':'')+'</button>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('nav').innerHTML=h;
 }
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function drawChat(){
-  document.getElementById('msgs').innerHTML = msgsHtml(CHAT);
-  var el=document.getElementById('msgs'); el.scrollTop=el.scrollHeight;
+function renderViews(){
+  var h='';
+  SEC.forEach(function(s){s.items.forEach(function(it){
+    h+='<div class="view" id="v-'+it[0]+'"></div>';
+  });});
+  document.getElementById('views').innerHTML=h;
 }
-function send(){
-  var i=document.getElementById('chatIn'); var v=i.value.trim(); if(!v) return;
-  CHAT.push({me:true,name:'Front desk',av:'FD',t:v,w:now()}); i.value=''; drawChat();
-  setTimeout(function(){ CHAT.push({me:false,name:'Guest — Room 14',av:'S',t:'Thank you!',w:now()}); drawChat(); }, 800);
+function show(k){
+  if(!V[k]) k='arrivals';
+  document.getElementById('v-'+k).innerHTML=V[k]();
+  var vs=document.querySelectorAll('.view');
+  for(var i=0;i<vs.length;i++) vs[i].classList.remove('on');
+  document.getElementById('v-'+k).classList.add('on');
+  var bs=document.querySelectorAll('#nav button');
+  for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on', bs[j].getAttribute('data-k')===k);
+  document.getElementById('ttl').textContent=TITLES[k]||k;
+  document.getElementById('tsub').textContent=SUBS[k]||'';
+  window.scrollTo(0,0);
 }
-function now(){ var d=new Date(); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
-function bars(){
-  var d=[['Mon',62],['Tue',71],['Wed',58],['Thu',80],['Fri',92],['Sat',100],['Sun',84]];
-  document.getElementById('bars').innerHTML = d.map(function(x){
-    return '<div class="bar" style="height:'+x[1]+'%"><span>€ '+(x[1]*58).toLocaleString('en-US')+'</span></div>';
-  }).join('');
-  document.getElementById('barlbl').innerHTML = d.map(function(x){ return '<div>'+x[0]+'</div>'; }).join('');
-}
-document.getElementById('arrTable').innerHTML = arrRows();
-document.getElementById('arrTable2').innerHTML = arrRows();
-document.getElementById('chTable').innerHTML = chRows();
-document.getElementById('outTable').innerHTML = outRows();
-document.getElementById('miniMsgs').innerHTML = msgsHtml(CHAT);
-document.getElementById('convList').innerHTML = CONVS.map(function(c,i){
-  return '<div class="conv'+(i===0?' on':'')+'"><span class="avatar">'+c[0].split('—').pop().trim()[0]+'</span>'
-    + '<div class="t"><b>'+c[0]+'</b><span>'+c[1]+'</span></div>'+(c[2]?'<span class="dot"></span>':'')+'</div>';
-}).join('');
-document.getElementById('chAv').textContent = 'S';
-drawChat(); bars(); nav();
-document.getElementById('chatSend').onclick = send;
-document.getElementById('chatIn').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
-window.addEventListener('hashchange', route);
+function route(){ show((location.hash||'#arrivals').replace('#','')); }
+renderNav(); renderViews();
+window.addEventListener('hashchange',route);
+document.getElementById('nav').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  location.hash=b.getAttribute('data-k');
+});
 route();
 </script>
 </body>
