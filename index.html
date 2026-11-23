@@ -48,11 +48,11 @@ nav button .badge{margin-left:auto;background:#fff;color:var(--green-d);font-siz
 .view{padding:22px;display:none}
 .view.on{display:block}
 .grid{display:grid;gap:16px}
-.k4{grid-template-columns:repeat(4,1fr)}
-.k3{grid-template-columns:repeat(3,1fr)}
+.k4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .two{grid-template-columns:1.4fr 1fr}
 .twoe{grid-template-columns:1fr 1fr}
-@media(max-width:1080px){.k4{grid-template-columns:repeat(2,1fr)}.two,.twoe{grid-template-columns:1fr}}
+@media(max-width:1080px){.k4{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.twoe{grid-template-columns:minmax(0,1fr)}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh)}
 .card .hd{padding:13px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .card .hd h3{margin:0;font-size:13.5px;font-weight:700}
@@ -94,7 +94,7 @@ tr:last-child td{border-bottom:0}
 .legend b{margin-left:auto;font-variant-numeric:tabular-nums}
 /* chat */
 .chatwrap{display:grid;grid-template-columns:290px 1fr}
-@media(max-width:900px){.chatwrap{grid-template-columns:1fr}}
+@media(max-width:900px){.chatwrap{grid-template-columns:minmax(0,1fr)}}
 .convlist{border-right:1px solid var(--line2)}
 .conv{padding:12px 14px;border-bottom:1px solid var(--line2);cursor:pointer;display:flex;gap:10px}
 .conv.on{background:#f4fbf8}
@@ -142,6 +142,82 @@ tr:last-child td{border-bottom:0}
 .cell.free{background:#eef1f6;color:#93a0ad}
 .cell.busy{background:#d7f2e8;color:#0e8f6b}
 .cell.dens{background:#12b886;color:#fff}
+
+/* ================= MOBILE FIX (added 23.11.2026) ================= */
+@media (max-width:820px){
+  .app{flex-direction:column}
+  /* сайдбар -> компактная шапка: логотип + объект, меню уходит в строку-скролл */
+  .side{width:100%;position:static;height:auto;max-height:none;overflow:visible;
+        display:grid;grid-template-columns:auto 1fr;align-items:center}
+  .brand{padding:10px 12px 8px;border-bottom:0}
+  .brand .mark{width:26px;height:26px;font-size:12.5px}
+  .brand b{font-size:13.5px}
+  .brand span{font-size:9.5px}
+  .prop{margin:8px 12px 8px 0;padding:6px 10px}
+  .prop span{font-size:9px}
+  .prop b{font-size:12.5px}
+  .side .foot{display:none}
+  #nav{grid-column:1 / -1;display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;
+       padding:2px 12px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #nav::-webkit-scrollbar{display:none}
+  #nav .sect{display:flex;align-items:center;gap:7px;margin:0}
+  #nav .sect>.st{display:none}
+  #nav button{width:auto;white-space:nowrap;flex:0 0 auto;background:rgba(255,255,255,.07);
+              border-radius:999px;padding:7px 12px;font-size:12.5px;gap:7px}
+  #nav button svg{width:15px;height:15px}
+  #nav button.on{background:var(--green);color:#fff}
+  #nav button .badge{margin-left:0}
+
+  .topbar{height:auto;min-height:0;padding:10px 12px;flex-wrap:wrap;gap:4px 8px}
+  .topbar h1{font-size:15.5px;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .sub{font-size:11.5px;order:3;width:100%}
+  .topbar .demo{margin-left:auto;flex:0 0 auto;gap:6px}
+  .chip{font-size:9.5px;padding:3px 7px;letter-spacing:.03em}
+
+  .view{padding:12px 12px 26px}
+  .grid{gap:12px;min-width:0}
+  .grid,.convlist,.thread,.conv{min-width:0}
+  .k4,.k3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two,.twoe{grid-template-columns:minmax(0,1fr)}
+  .card{border-radius:12px;overflow:hidden}
+  .card .hd{padding:11px 12px;flex-wrap:wrap;gap:4px 10px}
+  .card .hd h3{font-size:13px}
+  .card .bd{padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .kpi{padding:12px}
+  .kpi .lbl{min-height:0;font-size:10px}
+  .kpi .val{font-size:21px}
+  .kpi .sub{font-size:11px}
+
+  table{min-width:560px}
+  th,td{padding:9px 8px;font-size:12.5px}
+  .cal{min-width:560px}
+  .gridcells{min-width:600px;font-size:11px}
+
+  .bars{height:150px;gap:5px}
+  .bars .cl,.bars .cv{font-size:9.5px}
+  .pie{flex-direction:column;align-items:flex-start;gap:12px}
+  .pie .donut{width:132px;height:132px}
+
+  .chatwrap{grid-template-columns:minmax(0,1fr)}
+  .convlist{border-right:0;border-bottom:1px solid var(--line2);max-height:230px;overflow-y:auto}
+  .thread{padding:12px;min-height:200px}
+  .msg{max-width:90%;font-size:13px}
+  .composer{padding:10px 12px}
+
+  .panelhead{gap:8px;margin-bottom:12px}
+  .btn{padding:8px 12px;font-size:12.5px}
+  .btn.s{padding:6px 10px;font-size:11.5px}
+  .note{padding:11px 12px}
+  .note .nb{font-size:12.5px}
+}
+@media (max-width:430px){
+  .k4,.k3{grid-template-columns:1fr}
+  table{min-width:470px}
+  .cal{min-width:470px}
+  .gridcells{min-width:520px}
+}
+.wrap-x{overflow-x:hidden}
+/* ================= /MOBILE FIX ================= */
 </style>
 </head>
 <body>
