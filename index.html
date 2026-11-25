@@ -619,62 +619,62 @@ V.payroll=function(){
     'For the manager it also calculates the <b>taxes (13% + 30%)</b> automatically. A month-by-month view shows any remaining debts.');
 };
 
-/* -------- Campaigns (Yandex.Direct) -------- */
+/* -------- Campaigns (Google Ads) -------- */
 V.campaigns=function(){
-  return '<div class="panelhead"><span class="muted">Period</span><span class="field" style="width:auto">Last 30 days</span>'+
-    '<div class="tabs" style="margin-left:12px"><span class="tab on">All</span><span class="tab">Running</span><span class="tab">Problem</span></div>'+
+  return '<div class="panelhead"><span class="muted">Account</span><span class="field" style="width:auto">Google Ads · Ostrom Glamping</span>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Last 30 days</span><span class="tab">This month</span><span class="tab">Last season</span></div>'+
     '<button class="btn g s" style="margin-left:auto">Refresh now</button></div>'+
   '<div class="grid k4">'+
-    kpi('Spend','€ 1,240','period')+
-    kpi('Clicks','3,410','')+
-    kpi('Conversions','128','')+
-    kpi('Revenue','€ 9,880','from ads')+
+    kpi('Spend','€ 1,240','last 30 days')+
+    kpi('Clicks','3,410','CTR 5.1% · CPC € 0.36')+
+    kpi('Bookings from ads','128','conversions')+
+    kpi('Revenue','€ 9,880','ROAS 8.0×')+
   '</div><div style="height:16px"></div>'+
-  card('Campaign performance','campaigns: 7',
-    rows([['Campaign'],['State'],['Spend',1],['Clicks',1],['Conv.',1],['ROAS',1]],[
-      ['Search — glamping',{h:'<span class="pill ok">Running</span>','n':0},'€ 520','1,640','62','4.1'],
-      ['Search — tents',{h:'<span class="pill ok">Running</span>','n':0},'€ 380','1,020','38','3.4'],
-      ['Retargeting',{h:'<span class="pill warn">Moderation</span>','n':0},'€ 210','540','19','2.9'],
-      ['Network — brand',{h:'<span class="pill check">Paused</span>','n':0},'€ 130','210','9','1.8']
+  card('Campaign performance','Google Ads · 6 campaigns',
+    rows([['Campaign'],['Type'],['State'],['Budget / day',1],['Spend',1],['Clicks',1],['CTR',1],['Bookings',1],['ROAS',1]],[
+      ['Search — glamping EU',{h:'Search','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 25','€ 520','1,640','6.2%','62','4.1×'],
+      ['Performance Max — tents',{h:'PMax','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 18','€ 380','1,020','4.8%','38','3.4×'],
+      ['Search — brand',{h:'Search','n':0},{h:'<span class="pill warn">Budget limited</span>','n':0},'€ 6','€ 130','410','11.4%','9','5.2×'],
+      ['Display — remarketing',{h:'Display','n':0},{h:'<span class="pill check">Paused</span>','n':0},'€ 10','€ 210','540','1.9%','19','2.9×']
     ]))+
   note('How this works',
-    'Advertising figures come straight from the <b>Yandex.Direct API</b> — the program reads them itself, no screenshots or spreadsheets. You see spend, clicks, conversions and return on each campaign, and can dig into any of them.');
+    'Advertising figures come straight from the <b>Google Ads API</b> — the program reads them itself, no screenshots or spreadsheets. You see spend, clicks, bookings and return on each campaign, and can open any of them.');
 };
 
 /* -------- Breakdowns -------- */
 V.breakdowns=function(){
-  return '<div class="panelhead"><span class="muted">Campaign</span><span class="field" style="width:auto">Search — glamping</span>'+
+  return '<div class="panelhead"><span class="muted">Campaign</span><span class="field" style="width:auto">Search — glamping EU</span>'+
     '<button class="btn n s" style="margin-left:auto">Export CSV</button><button class="btn g s">Refresh</button></div>'+
-  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Search queries</span><span class="tab">Sites</span><span class="tab">Devices</span><span class="tab">Geo</span><span class="tab">Show conditions</span></div>'+
-  card('Search queries','rows: 46',
-    rows([['Query'],['Match'],['Impr.',1],['Clicks',1],['Spend',1],['Conv.',1]],[
-      ['glamping near me','phrase','4,120','210','€ 64','9'],
-      ['tent camp weekend','phrase','2,880','164','€ 51','6'],
-      ['family holiday nature','broad','3,540','142','€ 44','5'],
-      ['fishing weekend','exact','1,960','98','€ 31','4']
+  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Search terms</span><span class="tab">Keywords</span><span class="tab">Devices</span><span class="tab">Locations</span><span class="tab">Ad schedule</span></div>'+
+  card('Search terms','rows: 46',
+    rows([['Search term'],['Match type'],['Impr.',1],['Clicks',1],['Spend',1],['Bookings',1]],[
+      ['glamping holidays europe','phrase','4,120','210','€ 64','9'],
+      ['luxury tent break','exact','2,880','164','€ 51','6'],
+      ['family holiday in nature','broad','3,540','142','€ 44','5'],
+      ['fishing weekend getaway','exact','1,960','98','€ 31','4']
     ]))+
   note('How this works',
-    'Breakdowns show which search queries, sites, devices and regions actually bring bookings, so you can cut what does not work and add budget where it does.');
+    'Breakdowns show which search terms, keywords, devices and countries actually bring bookings, so you can cut what does not work and add budget where it does.');
 };
 
 /* -------- API access -------- */
 V.api=function(){
   return '<div class="grid twoe">'+
-    card('Access to the API','',
+    card('Access to the Google Ads API','',
       '<p class="muted" style="margin:0 0 10px">Your own token, stored locally on your computer and never printed in the log.</p>'+
-      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="y0_AgAAAA••••••••" style="flex:1"><button class="btn n s">Show</button><button class="btn g s">Check</button></div>'+
-      '<div class="muted" style="margin-bottom:14px">Login: your-client-login</div>'+
+      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="K8pQ2x••••••••••••" style="flex:1"><button class="btn n s">Show</button><button class="btn g s">Check</button></div>'+
+      '<div class="muted" style="margin-bottom:14px">Customer ID: 123-456-7890 · manager account 987-654-3210</div>'+
       rows([['Item'],['Value']],[
-        ['Token','stored (encrypted, local)'],
-        ['Storage','settings file on this computer'],
+        ['Developer token','stored (encrypted, local)'],
+        ['OAuth refresh token','stored (encrypted, local)'],
         ['Last update','25 Nov 2026, 09:12'],
         ['Account balance','€ 118.40'],
-        ['API points','2,450 left']
+        ['API quota','2,450 calls left today']
       ]))+
-    card('Status','',note('Privacy','The token stays on your computer. The program only calls the Yandex API and shows exactly what the network answered. It is never sent anywhere else.','gr'))+
+    card('Status','',note('Privacy','The token stays on your computer. The program only calls the Google Ads API and shows exactly what Google answered. It is never sent anywhere else.','gr'))+
   '</div>'+
   note('How this works',
-    'This screen keeps the Direct token and shows where the data comes from. Everything is local to your machine — safe to show.');
+    'This screen keeps the Google Ads developer token and shows where the data comes from. Everything is local to your machine — safe to show.');
 };
 
 /* -------- Guest messages (chat) -------- */
@@ -759,7 +759,7 @@ var SEC=[
  {t:'Tent rental + Fishing', items:[
    ['grid','Grid','grid'],['fishing','Fishing','fishing'],['occupancy','Tent occupancy','occupancy']]},
  {t:'Salaries', items:[['payroll','Payroll','payroll']]},
- {t:'Yandex.Direct', items:[
+ {t:'Google Ads', items:[
    ['campaigns','Campaigns','campaigns'],['breakdowns','Breakdowns','breakdowns'],['api','API access','api']]},
  {t:'Guests', items:[['chat','Messages','chat']]},
  {t:'Concept', items:[['charges','Charges to rooms','charges']]},
