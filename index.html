@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Front desk — demo</title>
+<title>Ресепшен — демо</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -41,6 +41,12 @@ nav button:hover{background:rgba(255,255,255,.06)}
 nav button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
 nav button .badge{margin-left:auto;background:var(--on-accent);color:var(--accent-d);font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px}
 .side .foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:var(--side-soft);line-height:1.5}
+
+/* --- переключатель языка РУС/АНГЛ (добавлено 28.11.2026) --- */
+.lang{margin-left:auto;display:flex;gap:2px;background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px}
+.lang a{font:700 11px/1 Inter,"Segoe UI",sans-serif;letter-spacing:.04em;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:999px}
+.lang a.on{background:var(--accent);color:var(--on-accent)}
+.topbar .demo{margin-left:8px}
 /* ---------- main ---------- */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
 .topbar{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 20px;position:sticky;top:0;z-index:10}
@@ -240,22 +246,23 @@ tr:hover td{background:#faf8f3}
   <aside class="side">
     <div class="brand">
       <div class="mark">FD</div>
-      <div><b>Front desk</b><span>Demo</span></div>
+      <div><b>Ресепшен</b><span>Демо</span></div>
     </div>
-    <div class="prop"><span>Property</span><b>Your property</b></div>
+    <div class="prop"><span>Объект</span><b>Ваш объект</b></div>
     <nav id="nav"></nav>
     <div class="foot">
-      Demo panel · sample data.<br>
-      Not connected to any real system.
+      Демо-панель · демо-данные.<br>
+      Не подключена к реальной системе.
     </div>
   </aside>
   <div class="main">
     <div class="topbar">
-      <h1 id="ttl">Today</h1>
+      <h1 id="ttl">Сегодня</h1>
       <span class="sub" id="tsub"></span>
-      <div class="demo">
-        <span class="chip">Demo</span>
-        <span class="chip g">Sample data</span>
+      <div class="lang"><a class="on" href="index.html">РУС</a><a href="index-en.html">АНГЛ</a></div>
+        <div class="demo">
+        <span class="chip">Демо</span>
+        <span class="chip g">Демо-данные</span>
       </div>
     </div>
     <div id="views"></div>
@@ -307,7 +314,7 @@ function av(name){
 function rows(head,data){
   function ch(c){ return (c&&c.h!==undefined)?c.h:(''+(c===undefined||c===null?'':c)); }
   function isNum(h){ var s=(''+h).trim(); return !!s && s.indexOf('<')<0 &&
-      (/^€/.test(s)||/%$/.test(s)||/^\d{1,3}(,\d{3})*$/.test(s)||/^\d+$/.test(s)); }
+      (/руб$/.test(s)||/%$/.test(s)||/^\d{1,3}(,\d{3})*$/.test(s)||/^\d+$/.test(s)); }
   var t=head.map(function(x){return (x&&x.h!==undefined)?x.h:(x&&x[0]!==undefined?x[0]:'');});
   var numCol=[];
   for(var j=0;j<t.length;j++){
@@ -340,54 +347,54 @@ var V={};
 /* -------- Arrivals on date -------- */
 V.arrivals=function(){
   return '<div class="panelhead">'+
-    '<div class="tabs"><span class="tab on">Today</span><span class="tab">Tomorrow</span></div>'+
-    '<span class="muted">Wednesday, 25 November</span>'+
-    '<button class="btn n s" style="margin-left:auto">Copy list for WhatsApp</button>'+
-    '<button class="btn n s">Save to Word</button>'+
-    '<button class="btn g s">Refresh</button></div>'+
-  card('Arrivals &amp; departures — today','12 arrivals',
-    rows([['Object'],['Guest'],['Nights',1],['Guests',1],['Arrival'],['Status'],['Balance',1]],
+    '<div class="tabs"><span class="tab on">Сегодня</span><span class="tab">Завтра</span></div>'+
+    '<span class="muted">среда, 25 ноября</span>'+
+    '<button class="btn n s" style="margin-left:auto">Скопировать список для WhatsApp</button>'+
+    '<button class="btn n s">Сохранить в Word</button>'+
+    '<button class="btn g s">Обновить</button></div>'+
+  card('Заезды и выезды — сегодня','12 заездов',
+    rows([['Объект'],['Гость'],['Ночей',1],['Гостей',1],['Заезд'],['Статус'],['Остаток',1]],
     [
-      ['Bungalow 14',{h:'<span class="gname">'+av('A. Smith')+'<span class="txt"><b>A. Smith</b><span>+44 7... · 2 adults</span></span></span>','n':0},'3','2','14:00','<span class="pill ok">In house</span>','€ 435.00'],
-      ['Bungalow 22','<span class="gname">'+av('L. Garcia')+'<span class="txt"><b>L. Garcia</b><span>bathhouse · transfer</span></span></span>','2','4','15:30','<span class="pill arr">Arriving</span>','€ 620.00'],
-      ['Villa tent 07','<span class="gname">'+av('M. Müller')+'<span class="txt"><b>M. Müller</b><span>no phone yet</span></span></span>','4','2','16:00','<span class="pill arr">Arriving</span>','€ 780.00'],
-      ['Safari tent 31','<span class="gname">'+av('G. Rossi')+'<span class="txt"><b>G. Rossi</b><span>fishing, 2 anglers</span></span></span>','1','2','17:15','<span class="pill arr">Arriving</span>','€ 195.00'],
-      ['Bungalow 05','<span class="gname">'+av('P. Nowak')+'<span class="txt"><b>P. Nowak</b><span>hot tub</span></span></span>','5','3','18:00','<span class="pill arr">Arriving</span>','€ 940.00'],
-      ['Tent 18','<span class="gname">'+av('E. Dupont')+'<span class="txt"><b>E. Dupont</b><span>car parking</span></span></span>','2','2','19:30','<span class="pill arr">Arriving</span>','€ 360.00']
+      ['Домик 14',{h:'<span class="gname">'+av('A. Smith')+'<span class="txt"><b>A. Smith</b><span>+44 7... · 2 взрослых</span></span></span>','n':0},'3','2','14:00','<span class="pill ok">Заселён</span>','435 руб'],
+      ['Домик 22','<span class="gname">'+av('L. Garcia')+'<span class="txt"><b>L. Garcia</b><span>баня · трансфер</span></span></span>','2','4','15:30','<span class="pill arr">Заезжает</span>','620 руб'],
+      ['Шатёр 07','<span class="gname">'+av('M. Müller')+'<span class="txt"><b>M. Müller</b><span>телефон не указан</span></span></span>','4','2','16:00','<span class="pill arr">Заезжает</span>','780 руб'],
+      ['Сафари-тент 31','<span class="gname">'+av('G. Rossi')+'<span class="txt"><b>G. Rossi</b><span>рыбалка, 2 рыбака</span></span></span>','1','2','17:15','<span class="pill arr">Заезжает</span>','195 руб'],
+      ['Домик 05','<span class="gname">'+av('P. Nowak')+'<span class="txt"><b>P. Nowak</b><span>купель</span></span></span>','5','3','18:00','<span class="pill arr">Заезжает</span>','940 руб'],
+      ['Тент 18','<span class="gname">'+av('E. Dupont')+'<span class="txt"><b>E. Dupont</b><span>машина</span></span></span>','2','2','19:30','<span class="pill arr">Заезжает</span>','360 руб']
     ])
   )+
   '<div style="height:16px"></div>'+
-  card('Messages to guests','ready to send',
-    '<p class="muted" style="margin:0 0 10px">Arrival text with the address, check-in time and breakfast hours. Copy it and send — nothing goes out automatically, you confirm the send.</p>'+
-    '<div class="row"><button class="btn n s">Preview text</button><button class="btn g s">Copy text</button></div>')+
-  note('How this works',
-    'Arrivals are loaded <b>automatically from your booking system (TravelLine)</b> — the program reads them through the API, so nobody types them in. '+
-    'The list can be copied in one click for WhatsApp/MAX or saved as a Word file for the reception desk.');
+  card('Сообщения гостям','готово к отправке',
+    '<p class="muted" style="margin:0 0 10px">Текст заезда с адресом, временем заселения и часами завтрака. Скопируйте и отправьте — само ничего не уходит, отправку подтверждаете вы.</p>'+
+    '<div class="row"><button class="btn n s">Посмотреть текст</button><button class="btn g s">Скопировать текст</button></div>')+
+  note('Как это работает',
+    'Заезды подгружаются <b>автоматически из вашей системы бронирования (PMS)</b> — программа читает их через API, вручную никто не вводит. '+
+    'Список копируется в один клик для WhatsApp/MAX или сохраняется файлом Word для стойки регистрации.');
 };
 
 /* -------- Dashboard -------- */
 V.dashboard=function(){
   return '<div class="panelhead">'+
-    '<button class="btn n s">Upload TravelLine file</button>'+
-    '<button class="btn g s" style="margin-left:auto">Sync with TravelLine</button></div>'+
+    '<button class="btn n s">Импорт из PMS (файл)</button>'+
+    '<button class="btn g s" style="margin-left:auto">Синхронизация с PMS по API</button></div>'+
   '<div class="grid k4">'+
-    kpi('Revenue','€ 412,600','all time')+
-    kpi('Bookings','1,248','unique')+
-    kpi('Nights','3,910','sold')+
-    kpi('Breakfasts','6,240','portions')+
+    kpi('Выручка','412 600 руб','за всё время')+
+    kpi('Брони','1 248','уникальных')+
+    kpi('Ночей','3 910','продано')+
+    kpi('Завтраки','6 240','порций')+
   '</div>'+
   '<div style="height:16px"></div>'+
   '<div class="grid k3">'+
-    kpi('Avg. check','€ 330','per booking')+
-    kpi('ADR','€ 105','price per night')+
-    kpi('RevPAR','€ 71','per object per night')+
+    kpi('Средний чек','330 руб','за бронь')+
+    kpi('ADR','105 руб','цена за ночь')+
+    kpi('RevPAR','71 руб','за объект в ночь')+
   '</div>'+
   '<div style="height:16px"></div>'+
   '<div class="grid two">'+
-    card('Revenue by week','€ / week',bars([
-      ['W38',11800,'€11.8k'],['W39',13200,'€13.2k'],['W40',10400,'€10.4k'],['W41',14900,'€14.9k'],['W42',16200,'€16.2k'],['W43',13800,'€13.8k'],['W44',17100,'€17.1k']]))+
-    card('Revenue structure','by tariff',(function(){
-      var d=[['Direct',42],['Aggregators',33],['Breakfasts',14],['Extras',11]];
+    card('Выручка по неделям','руб / неделя',bars([
+      ['W38',11800,'11,8к'],['W39',13200,'13,2к'],['W40',10400,'10,4к'],['W41',14900,'14,9к'],['W42',16200,'16,2к'],['W43',13800,'13,8к'],['W44',17100,'17,1к']]))+
+    card('Структура выручки','по тарифам',(function(){
+      var d=[['Прямые',42],['Агрегаторы',33],['Завтраки',14],['Допуслуги',11]];
       var cl=['#a34a32','#5a6b7a','#a8762c','#8b7a63'];
       var g='conic-gradient(';var acc=0;var parts=[];
       d.forEach(function(x,i){parts.push(cl[i]+' '+acc+'% '+(acc+x[1])+'%');acc+=x[1];});
@@ -396,149 +403,149 @@ V.dashboard=function(){
     })())+
   '</div>'+
   '<div style="height:16px"></div>'+
-  card('Smart analysis — this month','',
-    '<p style="margin:0;font-size:13.5px;color:#4a4f46">November is <b>11% above</b> October. Occupancy is 82% on weekends; the mid-week dip is the main growth opportunity. Average length of stay is 2.4 nights. Direct bookings rose to 42% of revenue. Note: 3 bookings are missing an object number — load an ArrivalsReport to fix them.</p>')+
-  note('How this works',
-    'These figures are <b>calculated by the program from your bookings</b> — nothing is entered by hand. '+
-    'The formulas are standard: <code>ADR = revenue ÷ nights sold</code>, <code>RevPAR = revenue ÷ (objects × nights)</code>, <code>Avg. check = revenue ÷ bookings</code>. '+
-    'Bookings come from TravelLine <b>via the API</b> (or from a file you upload). The charts update as soon as new bookings arrive.');
+  card('Умный анализ — этот месяц','',
+    '<p style="margin:0;font-size:13.5px;color:#4a4f46">Ноябрь <b>на 11% выше</b> октября. Загрузка по выходным — 82%; провал в середине недели — главная точка роста. Средняя длительность проживания — 2,4 ночи. Прямые брони выросли до 42% выручки. Замечание: у 3 броней нет номера объекта — загрузите ArrivalsReport, чтобы их поправить.</p>')+
+  note('Как это работает',
+    'Эти цифры <b>программа считает сама из ваших броней</b> — вручную ничего не вводится. '+
+    'Формулы стандартные: <code>ADR = выручка ÷ проданные ночи</code>, <code>RevPAR = выручка ÷ (объекты × ночи)</code>, <code>Средний чек = выручка ÷ брони</code>. '+
+    'Брони приходят из вашей PMS <b>через API</b> (или из загруженного файла). Графики обновляются, как только появляются новые брони.');
 };
 
 /* -------- Compare -------- */
 V.compare=function(){
   return '<div class="panelhead">'+
-    '<span class="muted">Period 1</span><span class="field" style="width:auto">Nov 2026</span>'+
-    '<span class="muted">vs</span><span class="field" style="width:auto">Nov 2025</span>'+
-    '<button class="btn g s">Compare</button></div>'+
-  card('Comparison','change (2 → 1)',
-    rows([['Indicator'],[{h:'Nov 2026',n:1}],[{h:'Nov 2025',n:1}],[{h:'Δ',n:1}]],[
-      ['Revenue','€ 41,200','€ 37,000','<span class="pill ok">+11%</span>'],
-      ['Bookings','128','121','<span class="pill ok">+6%</span>'],
-      ['Nights','402','388','<span class="pill ok">+4%</span>'],
-      ['Avg. length of stay','3.1','3.2','<span class="pill check">-3%</span>'],
-      ['ADR','€ 102','€ 95','<span class="pill ok">+7%</span>'],
-      ['RevPAR','€ 74','€ 68','<span class="pill ok">+9%</span>']
+    '<span class="muted">Период 1</span><span class="field" style="width:auto">Nov 2026</span>'+
+    '<span class="muted">и</span><span class="field" style="width:auto">Nov 2025</span>'+
+    '<button class="btn g s">Сравнить</button></div>'+
+  card('Сравнение','изменение (2 → 1)',
+    rows([['Показатель'],[{h:'ноя 2026',n:1}],[{h:'ноя 2025',n:1}],[{h:'Δ',n:1}]],[
+      ['Выручка','41 200 руб','37 000 руб','<span class="pill ok">+11%</span>'],
+      ['Брони','128','121','<span class="pill ok">+6%</span>'],
+      ['Ночей','402','388','<span class="pill ok">+4%</span>'],
+      ['Средняя длительность','3,1','3,2','<span class="pill check">-3%</span>'],
+      ['ADR','102 руб','95 руб','<span class="pill ok">+7%</span>'],
+      ['RevPAR','74 руб','68 руб','<span class="pill ok">+9%</span>']
     ]))+
-  note('How this works',
-    'Pick any two periods — the program lines them up and shows the change in each indicator. Handy before a price review or an owners\u2019 meeting.');
+  note('Как это работает',
+    'Выберите любые два периода — программа сопоставит их и покажет изменение по каждому показателю. Удобно перед пересмотром цен или встречей с собственником.');
 };
 
 /* -------- Analytics detail -------- */
 V.detail=function(){
   return '<div class="grid k4">'+
-    kpi('Booking depth','38 days','average, ahead of arrival')+
-    kpi('Early bookings','31%','more than 30 days ahead')+
-    kpi('Last-minute','12%','less than 3 days ahead')+
-    kpi('Avg. stay','2.4 nights','')+
+    kpi('Глубина бронирования','38 дней','в среднем до заезда')+
+    kpi('Ранние брони','31%','более чем за 30 дней')+
+    kpi('В последний момент','12%','менее чем за 3 дня')+
+    kpi('Средняя длительность','2,4 ночи','')+
   '</div><div style="height:16px"></div>'+
   '<div class="grid twoe">'+
-    card('Revenue by source','',rows([['Source'],['Revenue'],[{h:'Share',n:1}]],[
-      ['Direct',{h:'€ 173,300','n':0},'42%'],
-      ['Booking.com','€ 111,400','27%'],
-      ['Airbnb','€ 61,900','15%'],
-      ['Expedia','€ 41,300','10%'],
-      ['Other','€ 24,700','6%']]))+
-    card('Booking depth','days before arrival',bars([['0-2',12,'12%'],['3-7',22,'22%'],['8-14',19,'19%'],['15-30',16,'16%'],['31-60',18,'18%'],['60+',13,'13%']]))+
+    card('Выручка по источникам','',rows([['Источник'],['Выручка'],[{h:'Доля',n:1}]],[
+      ['Прямые',{h:'173 300 руб','n':0},'42%'],
+      ['Booking.com','111 400 руб','27%'],
+      ['Airbnb','61 900 руб','15%'],
+      ['Expedia','41 300 руб','10%'],
+      ['Другое','24 700 руб','6%']]))+
+    card('Глубина бронирования','дней до заезда',bars([['0-2',12,'12%'],['3-7',22,'22%'],['8-14',19,'19%'],['15-30',16,'16%'],['31-60',18,'18%'],['60+',13,'13%']]))+
   '</div>'+
-  note('How this works',
-    'Deeper analytics on the same bookings: where guests come from, how far ahead they book, which weekday peaks. All of it is derived from the booking data — no extra input.');
+  note('Как это работает',
+    'Глубокая аналитика по тем же броням: откуда приходят гости, за сколько дней бронируют, какие дни недели пиковые. Всё считается из данных броней — без дополнительного ввода.');
 };
 
 /* -------- Guests -------- */
 V.guests=function(){
   return '<div class="grid k3">'+
-    kpi('Unique guests','864','all time')+
-    kpi('Repeat guests','213','booked more than once')+
-    kpi('Top-10 share','18%','of revenue')+
+    kpi('Уникальных гостей','864','за всё время')+
+    kpi('Повторные гости','213','бронировали больше одного раза')+
+    kpi('Доля топ-10','18%','от выручки')+
   '</div><div style="height:16px"></div>'+
-  card('Top-10 returning guests','sort: by revenue',
-    rows([['Guest'],['Visits',1],['Nights',1],['Revenue',1],['Last visit']],[
-      ['E. Osolovskaya','9','24','€ 6,120','12 Nov 2026'],
-      ['A. Smith','7','19','€ 4,980','25 Nov 2026'],
-      ['M. Müller','6','22','€ 4,410','25 Nov 2026'],
-      ['L. Garcia','5','13','€ 3,120','25 Nov 2026'],
-      ['P. Nowak','5','17','€ 2,960','25 Nov 2026']
+  card('Топ-10 постоянных гостей','сортировка: по выручке',
+    rows([['Гость'],['Визитов',1],['Ночей',1],['Выручка',1],['Последний визит']],[
+      ['E. Osolovskaya','9','24','6 120 руб','12 ноя 2026'],
+      ['A. Smith','7','19','4 980 руб','25 ноя 2026'],
+      ['M. Müller','6','22','4 410 руб','25 ноя 2026'],
+      ['L. Garcia','5','13','3 120 руб','25 ноя 2026'],
+      ['P. Nowak','5','17','2 960 руб','25 ноя 2026']
     ]))+
-  note('How this works',
-    'The program groups bookings by guest and counts repeat visits, nights and revenue. Useful for thank-you offers to your best customers.');
+  note('Как это работает',
+    'Программа группирует брони по гостю и считает повторные визиты, ночи и выручку. Удобно для благодарственных предложений лучшим клиентам.');
 };
 
 /* -------- Rates & occupancy -------- */
 V.rates=function(){
   return '<div class="grid k3">'+
-    kpi('Average ADR','€ 105','of the period')+
-    kpi('Nights sold','3,910','all time')+
-    kpi('Occupancy','74%','object-nights sold')+
+    kpi('Средний ADR','105 руб','за период')+
+    kpi('Ночей продано','3 910','за всё время')+
+    kpi('Загрузка','74%','проданных объекто-ночей')+
   '</div><div style="height:16px"></div>'+
   '<div class="grid twoe">'+
-    card('ADR by month','€ / night',bars([['Jul',128,'128'],['Aug',134,'134'],['Sep',112,'112'],['Oct',98,'98'],['Nov',102,'102']]))+
-    card('ADR and occupancy','by month',bars([['Jul',96,'96%'],['Aug',99,'99%'],['Sep',88,'88%'],['Oct',72,'72%'],['Nov',74,'74%']]))+
+    card('ADR по месяцам','руб / ночь',bars([['Июл',128,'128'],['Авг',134,'134'],['Сен',112,'112'],['Окт',98,'98'],['Ноя',102,'102']]))+
+    card('ADR и загрузка','по месяцам',bars([['Июл',96,'96%'],['Авг',99,'99%'],['Сен',88,'88%'],['Окт',72,'72%'],['Ноя',74,'74%']]))+
   '</div>'+
-  note('How this works',
-    'Rate and occupancy side by side, so you can see whether a higher price cost you occupancy — or gained you revenue. Calculated from the loaded bookings.');
+  note('Как это работает',
+    'Тариф и загрузка рядом — видно, стоила ли высокая цена загрузки или принесла выручку. Считается из загруженных броней.');
 };
 
 /* -------- Breakfasts -------- */
 V.breakfasts=function(){
-  return '<div class="panelhead"><span class="muted">From</span><span class="field" style="width:auto">23.11.2026</span>'+
-    '<span class="muted">to</span><span class="field" style="width:auto">30.11.2026</span>'+
-    '<button class="btn g s">Apply</button><button class="btn n s" style="margin-left:auto">Export to Excel for the kitchen</button></div>'+
-  card('Breakfast plan by date','34 portions',
-    rows([['Date'],['Object'],['Portions',1]],[
-      ['23.11','Bungalow 14','2'],['23.11','Bungalow 22','4'],['23.11','Villa tent 07','2'],
-      ['23.11','Safari tent 31','2'],['23.11','Bungalow 05','3'],['23.11','Tent 18','2'],
-      ['24.11','Bungalow 14','2'],['24.11','Bungalow 05','3'],
-      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'<b>34</b>','n':1}]
+  return '<div class="panelhead"><span class="muted">С</span><span class="field" style="width:auto">23.11.2026</span>'+
+    '<span class="muted">по</span><span class="field" style="width:auto">30.11.2026</span>'+
+    '<button class="btn g s">Применить</button><button class="btn n s" style="margin-left:auto">Выгрузить Excel для кухни</button></div>'+
+  card('План завтраков по датам','34 порции',
+    rows([['Дата'],['Объект'],['Порций',1]],[
+      ['23.11','Домик 14','2'],['23.11','Домик 22','4'],['23.11','Шатёр 07','2'],
+      ['23.11','Сафари-тент 31','2'],['23.11','Домик 05','3'],['23.11','Тент 18','2'],
+      ['24.11','Домик 14','2'],['24.11','Домик 05','3'],
+      [{h:'<b>Итого</b>','n':0},{h:'','n':0},{h:'<b>34</b>','n':1}]
     ]))+
-  note('How this works',
-    'Every booking that includes breakfast becomes a number of portions per date — the kitchen gets a ready plan and an Excel file. No more counting by hand.');
+  note('Как это работает',
+    'Каждая бронь с завтраком превращается в число порций на дату — кухня получает готовый план и файл Excel. Больше не нужно считать вручную.');
 };
 
 /* -------- Reports -------- */
 V.reports=function(){
-  return '<div class="panelhead"><span class="muted">Quick period</span>'+
-    '<div class="tabs"><span class="tab on">Last week</span><span class="tab">This month</span><span class="tab">Year to date</span><span class="tab">Custom</span></div>'+
-    '<button class="btn n s" style="margin-left:auto">Generate Excel report</button>'+
-    '<button class="btn g s">Copy owner\u2019s report</button></div>'+
-  card('Owner\u2019s report — preview','',
-    '<div style="background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;white-space:pre-line">REPORT 01–07 Nov 2026\n\n  Total revenue        € 9,880\n  Bookings             32\n  Guests               71\n  Nights               84\n  Breakfasts           62\n  Average check        € 309\n  ADR (per night)      € 118\n  RevPAR (per object)  € 82\n\n  Direct / Aggregators / Breakfasts\n  Structure of sales by channel</div>')+
-  note('How this works',
-    'Reports for the owner build themselves from the same data — one click to copy the text into WhatsApp/Telegram, or to get a ready Excel file with a summary, a chart and a day-by-day breakdown.');
+  return '<div class="panelhead"><span class="muted">Быстрый период</span>'+
+    '<div class="tabs"><span class="tab on">Последняя неделя</span><span class="tab">Этот месяц</span><span class="tab">С начала года</span><span class="tab">Свой период</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Сформировать отчёт Excel</button>'+
+    '<button class="btn g s">Скопировать отчёт владельцу</button></div>'+
+  card('Отчёт владельцу — предпросмотр','',
+    '<div style="background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;white-space:pre-line">ОТЧЁТ 01–07 ноя 2026\n\n  Выручка всего        9 880 руб\n  Брони                32\n  Гостей               71\n  Ночей                84\n  Завтраков            62\n  Средний чек          309 руб\n  ADR (за ночь)        118 руб\n  RevPAR (за объект)   82 руб\n\n  Прямые / Агрегаторы / Завтраки\n  Структура продаж по каналам</div>')+
+  note('Как это работает',
+    'Отчёты для владельца собираются сами из тех же данных — один клик, чтобы скопировать текст в WhatsApp/Telegram или получить готовый файл Excel со сводкой, графиком и разбивкой по дням.');
 };
 
 /* -------- Upcoming -------- */
 V.upcoming=function(){
   return '<div class="grid k4">'+
-    kpi('Booked','412','object-nights')+
-    kpi('Avg. occupancy','58%','next 6 months')+
-    kpi('Free nights','1,120','next 6 months')+
-    kpi('Avg. check','€ 340','')+
+    kpi('Забронировано','412','объекто-ночей')+
+    kpi('Средняя загрузка','58%','следующие 6 месяцев')+
+    kpi('Свободных ночей','1 120','следующие 6 месяцев')+
+    kpi('Средний чек','340 руб','')+
   '</div><div style="height:16px"></div>'+
   '<div class="grid twoe">'+
-    card('Occupancy forecast','by month',bars([['Dec',41,'41%'],['Jan',33,'33%'],['Feb',38,'38%'],['Mar',52,'52%'],['Apr',66,'66%'],['May',78,'78%']]))+
-    card('Next 7 days','objects booked per day',bars([['Mon',14,'14'],['Tue',12,'12'],['Wed',16,'16'],['Thu',19,'19'],['Fri',24,'24'],['Sat',26,'26'],['Sun',18,'18']]))+
+    card('Прогноз загрузки','по месяцам',bars([['Дек',41,'41%'],['Янв',33,'33%'],['Фев',38,'38%'],['Мар',52,'52%'],['Апр',66,'66%'],['Май',78,'78%']]))+
+    card('Ближайшие 7 дней','забронировано объектов в день',bars([['Пн',14,'14'],['Вт',12,'12'],['Ср',16,'16'],['Чт',19,'19'],['Пт',24,'24'],['Сб',26,'26'],['Вс',18,'18']]))+
   '</div><div style="height:16px"></div>'+
-  card('Top-10 upcoming bookings by amount','',rows([['Arrival'],['Guest'],['Object'],['Amount',1]],[
-    ['08 Dec','E. Osolovskaya','Bungalow 14','€ 4,200'],
-    ['15 Dec','M. Müller','Villa tent 07','€ 3,780'],
-    ['22 Dec','A. Smith','Bungalow 22','€ 3,100'],
-    ['29 Dec','L. Garcia','Bungalow 05','€ 2,760']
+  card('Топ-10 предстоящих броней по сумме','',rows([['Заезд'],['Гость'],['Объект'],['Сумма',1]],[
+    ['08 дек','E. Osolovskaya','Домик 14','4 200 руб'],
+    ['15 дек','M. Müller','Шатёр 07','3 780 руб'],
+    ['22 дек','A. Smith','Домик 22','3 100 руб'],
+    ['29 дек','L. Garcia','Домик 05','2 760 руб']
   ]))+
-  note('How this works',
-    'The forecast is built from bookings that are already in the system — it shows how full the coming months look and where there is room to sell.');
+  note('Как это работает',
+    'Прогноз строится по броням, которые уже есть в системе — видно, насколько полны ближайшие месяцы и где есть место для продаж.');
 };
 
 /* -------- Grid (chess) -------- */
 V.grid=function(){
-  var days=['Mon 23','Tue 24','Wed 25','Thu 26','Fri 27','Sat 28','Sun 29'];
+  var days=['Пн 23','Вт 24','Ср 25','Чт 26','Пт 27','Сб 28','Вс 29'];
   var data=[
-    ['Bungalow 14',['b','b','b','f','f','b','b']],
-    ['Bungalow 22',['f','b','b','b','b','b','f']],
-    ['Bungalow 05',['b','b','b','b','d','d','b']],
-    ['Bungalow 31',['f','f','b','b','b','f','f']],
-    ['Villa tent 07',['b','b','f','f','b','b','b']],
-    ['Safari tent 12',['f','b','b','b','b','f','f']],
-    ['Tent 18',['b','f','f','b','b','b','f']]
+    ['Домик 14',['b','b','b','f','f','b','b']],
+    ['Домик 22',['f','b','b','b','b','b','f']],
+    ['Домик 05',['b','b','b','b','d','d','b']],
+    ['Домик 31',['f','f','b','b','b','f','f']],
+    ['Шатёр 07',['b','b','f','f','b','b','b']],
+    ['Сафари-тент 12',['f','b','b','b','b','f','f']],
+    ['Тент 18',['b','f','f','b','b','b','f']]
   ];
   var cls={f:'free',b:'busy',d:'dens'};
   var head='<div class="gridcells" style="grid-template-columns:150px repeat(7,1fr)">'+
@@ -547,134 +554,134 @@ V.grid=function(){
     head+='<div class="r">'+r[0]+'</div>'+r[1].map(function(c){return '<div class="cell '+cls[c]+'">'+(c==='f'?'':'●')+'</div>';}).join('');
   });
   head+='</div>';
-  return '<div class="panelhead"><span class="muted">Week 23–29 Nov</span>'+
+  return '<div class="panelhead"><span class="muted">Неделя 23–29 ноя</span>'+
     '<span style="margin-left:auto" class="muted">'
-    +'<span class="pill busy">Busy</span> <span class="pill dens">Occupied</span> <span class="pill free">Free</span></span></div>'+
-  card('Tent rental — by days','click a free cell to book, a busy one to open it',head)+
-  note('How this works',
-    'The grid is your tent and fishing rentals on a timeline: terracotta is busy, warm grey is free. Click a free cell to create a booking, click a busy one to open it. The same screen prints a PDF voucher for the guest.');
+    +'<span class="pill busy">Занято</span> <span class="pill dens">Проживание</span> <span class="pill free">Свободно</span></span></div>'+
+  card('Аренда объектов — по дням','нажмите свободную клетку, чтобы забронировать, занятую — чтобы открыть',head)+
+  note('Как это работает',
+    'Сетка — это аренда объектов и рыбалки на шкале времени: терракота — занято, тёплый серый — свободно. Нажмите свободную клетку, чтобы создать бронь, занятую — чтобы открыть. Этот же экран печатает PDF-путёвку для гостя.');
 };
 
 /* -------- Fishing -------- */
 V.fishing=function(){
   return '<div class="grid k3">'+
-    kpi('Fishing sold','318','tickets, this season')+
-    kpi('Revenue','€ 9,540','from fishing')+
-    kpi('Avg. per company','€ 30','')+
+    kpi('Продано рыбалок','318','путёвок, этот сезон')+
+    kpi('Выручка','9 540 руб','с рыбалки')+
+    kpi('Средняя на компанию','30 руб','')+
   '</div><div style="height:16px"></div>'+
-  card('Fishing — by days','',rows([['Date'],['Companies',1],['Guests',1],['Amount',1]],[
-    ['25 Nov','6','14','€ 420'],
-    ['26 Nov','4','9','€ 270'],
-    ['27 Nov','7','16','€ 480'],
-    ['28 Nov','9','21','€ 630'],
-    ['29 Nov','8','18','€ 540']
+  card('Рыбалка — по дням','',rows([['Дата'],['Компаний',1],['Гостей',1],['Сумма',1]],[
+    ['25 ноя','6','14','420 руб'],
+    ['26 ноя','4','9','270 руб'],
+    ['27 ноя','7','16','480 руб'],
+    ['28 ноя','9','21','630 руб'],
+    ['29 ноя','8','18','540 руб']
   ]))+
-  note('How this works',
-    'Fishing tickets are counted separately from the tents, so you always see how much the fishing itself earns.');
+  note('Как это работает',
+    'Путёвки на рыбалку считаются отдельно от объектов — всегда видно, сколько зарабатывает сама рыбалка.');
 };
 
 /* -------- Tent occupancy -------- */
 V.occupancy=function(){
-  return '<div class="panelhead"><span class="muted">Period</span>'+
-    '<span class="field" style="width:auto">01.11.2026</span><span class="muted">to</span>'+
+  return '<div class="panelhead"><span class="muted">Период</span>'+
+    '<span class="field" style="width:auto">01.11.2026</span><span class="muted">по</span>'+
     '<span class="field" style="width:auto">30.11.2026</span>'+
-    '<button class="btn g s">Calculate</button><button class="btn n s" style="margin-left:auto">Export to Excel</button></div>'+
-  card('Occupancy and revenue by object','28 objects · 30 days',
-    rows([['Object'],['Days busy',1],['Days total',1],['Occupancy',1],['Revenue',1]],[
-      ['Bungalow 14','22','30','73%','€ 2,640'],
-      ['Bungalow 22','18','30','60%','€ 2,160'],
-      ['Bungalow 05','25','30','83%','€ 3,125'],
-      ['Villa tent 07','20','30','67%','€ 3,000'],
-      ['Safari tent 12','16','30','53%','€ 1,920'],
-      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'','n':0},{h:'<b>74%</b>','n':1},{h:'<b>€ 41,200</b>','n':1}]
+    '<button class="btn g s">Рассчитать</button><button class="btn n s" style="margin-left:auto">Выгрузить в Excel</button></div>'+
+  card('Загрузка и выручка по объектам','28 объектов · 30 дней',
+    rows([['Объект'],['Дней занято',1],['Дней всего',1],['Загрузка',1],['Выручка',1]],[
+      ['Домик 14','22','30','73%','2 640 руб'],
+      ['Домик 22','18','30','60%','2 160 руб'],
+      ['Домик 05','25','30','83%','3 125 руб'],
+      ['Шатёр 07','20','30','67%','3 000 руб'],
+      ['Сафари-тент 12','16','30','53%','1 920 руб'],
+      [{h:'<b>Итого</b>','n':0},{h:'','n':0},{h:'','n':0},{h:'<b>74%</b>','n':1},{h:'<b>41 200 руб</b>','n':1}]
     ]))+
-  note('How this works',
-    'For any period the program calculates how many days each object was occupied and how much it earned. Export to Excel in one click.');
+  note('Как это работает',
+    'За любой период программа считает, сколько дней каждый объект был занят и сколько заработал. Выгрузка в Excel в один клик.');
 };
 
 /* -------- Payroll -------- */
 V.payroll=function(){
   return '<div class="panelhead"><button class="btn n s">‹</button><span class="muted">November 2026</span><button class="btn n s">›</button>'+
-    '<div class="tabs" style="margin-left:12px"><span class="tab on">Table</span><span class="tab">Statistics</span></div>'+
-    '<button class="btn n s" style="margin-left:auto">Staff list…</button></div>'+
-  card('Accruals for the month','',
-    rows([['Employee'],['Position'],['Salary',1],['Days',1],['Accrued',1],['Paid',1],['Balance',1]],[
-      ['Ivan Petrov','Manager','€ 900','26/30','€ 780','€ 780','€ 0'],
-      ['Maria Ivanova','Housekeeping','€ 700','28/30','€ 653','€ 300','<span class="pill warn">€ 353</span>'],
-      ['Sergey Kuznetsov','Chef','€ 850','24/30','€ 680','€ 680','€ 0'],
-      ['Anna Smirnova','Waitress','€ 650','22/30','€ 477','€ 200','<span class="pill warn">€ 277</span>'],
-      ['Dmitry Orlov','Technician','€ 600','20/30','€ 400','€ 400','€ 0']
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Таблица</span><span class="tab">Статистика</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Список сотрудников…</button></div>'+
+  card('Начисления за месяц','',
+    rows([['Сотрудник'],['Должность'],['Оклад',1],['Дней',1],['Начислено',1],['Выплачено',1],['Остаток',1]],[
+      ['Иван Петров','Управляющий','900 руб','26/30','780 руб','780 руб','0 руб'],
+      ['Мария Иванова','Горничная','700 руб','28/30','653 руб','300 руб','<span class="pill warn">353 руб</span>'],
+      ['Сергей Кузнецов','Повар','850 руб','24/30','680 руб','680 руб','0 руб'],
+      ['Анна Смирнова','Официант','650 руб','22/30','477 руб','200 руб','<span class="pill warn">277 руб</span>'],
+      ['Дмитрий Орлов','Техник','600 руб','20/30','400 руб','400 руб','0 руб']
     ]))+
   '<div style="height:16px"></div>'+
   '<div class="grid twoe">'+
-    card('Month summary','',rows([['Item'],[{h:'Amount',n:1}]],[
-      ['Total accrued','€ 2,990'],['Paid','€ 2,360'],['<b>Balance to pay</b>','<b>€ 630</b>'],['Active staff','5']
+    card('Итоги месяца','',rows([['Показатель'],[{h:'Сумма',n:1}]],[
+      ['Всего начислено','2 990 руб'],['Выплачено','2 360 руб'],['<b>Осталось выплатить</b>','<b>630 руб</b>'],['Активных сотрудников','5']
     ]))+
-    card('Manager taxes','official part € 500',rows([['Tax'],[{h:'Amount',n:1}]],[
-      ['Income tax (13%)','€ 65'],['Social contributions (30%)','€ 150'],['<b>Total per month</b>','<b>€ 215</b>']
+    card('Налоги управляющего','официальная часть 500 руб',rows([['Налог'],[{h:'Сумма',n:1}]],[
+      ['НДФЛ (13%)','65 руб'],['Страховые взносы (30%)','150 руб'],['<b>Итого в месяц</b>','<b>215 руб</b>']
     ]))+
   '</div>'+
-  note('How this works',
-    'Staff, salaries and worked days are kept here. You mark the days worked on a calendar, add payments as they happen, and the program shows the <b>accrued amount, what is paid and the balance</b>. '+
-    'For the manager it also calculates the <b>taxes (13% + 30%)</b> automatically. A month-by-month view shows any remaining debts.');
+  note('Как это работает',
+    'Здесь хранятся сотрудники, оклады и отработанные дни. Вы отмечаете дни в календаре, вносите выплаты по мере их появления, а программа показывает <b>начисленную сумму, выплату и остаток</b>. '+
+    'Для управляющего она ещё и сама считает <b>налоги (13% + 30%)</b>. По месяцам видно, где остались долги.');
 };
 
 /* -------- Campaigns (Google Ads) -------- */
 V.campaigns=function(){
-  return '<div class="panelhead"><span class="muted">Account</span><span class="field" style="width:auto">Google Ads · Ostrom Glamping</span>'+
-    '<div class="tabs" style="margin-left:12px"><span class="tab on">Last 30 days</span><span class="tab">This month</span><span class="tab">Last season</span></div>'+
-    '<button class="btn g s" style="margin-left:auto">Refresh now</button></div>'+
+  return '<div class="panelhead"><span class="muted">Аккаунт</span><span class="field" style="width:auto">Google Ads · Остров Глэмпинг</span>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Последние 30 дней</span><span class="tab">Этот месяц</span><span class="tab">Прошлый сезон</span></div>'+
+    '<button class="btn g s" style="margin-left:auto">Обновить сейчас</button></div>'+
   '<div class="grid k4">'+
-    kpi('Spend','€ 1,240','last 30 days')+
-    kpi('Clicks','3,410','CTR 5.1% · CPC € 0.36')+
-    kpi('Bookings from ads','128','conversions')+
-    kpi('Revenue','€ 9,880','ROAS 8.0×')+
+    kpi('Расход','1 240 руб','последние 30 дней')+
+    kpi('Клики','3 410','CTR 5,1% · CPC 0 руб')+
+    kpi('Брони с рекламы','128','конверсии')+
+    kpi('Выручка','9 880 руб','ROAS 8,0×')+
   '</div><div style="height:16px"></div>'+
-  card('Campaign performance','Google Ads · 6 campaigns',
-    rows([['Campaign'],['Type'],['State'],['Budget / day',1],['Spend',1],['Clicks',1],['CTR',1],['Bookings',1],['ROAS',1]],[
-      ['Search — glamping EU',{h:'Search','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 25','€ 520','1,640','6.2%','62','4.1×'],
-      ['Performance Max — tents',{h:'PMax','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 18','€ 380','1,020','4.8%','38','3.4×'],
-      ['Search — brand',{h:'Search','n':0},{h:'<span class="pill warn">Budget limited</span>','n':0},'€ 6','€ 130','410','11.4%','9','5.2×'],
-      ['Display — remarketing',{h:'Display','n':0},{h:'<span class="pill check">Paused</span>','n':0},'€ 10','€ 210','540','1.9%','19','2.9×']
+  card('Эффективность кампаний','Google Ads · 6 кампаний',
+    rows([['Кампания'],['Тип'],['Состояние'],['Бюджет / день',1],['Расход',1],['Клики',1],['CTR',1],['Брони',1],['ROAS',1]],[
+      ['Поиск — глэмпинг ЕС',{h:'Поиск','n':0},{h:'<span class="pill ok">Работает</span>','n':0},'25 руб','520 руб','1 640','6,2%','62','4,1×'],
+      ['Performance Max — тенты',{h:'PMax','n':0},{h:'<span class="pill ok">Работает</span>','n':0},'18 руб','380 руб','1 020','4,8%','38','3,4×'],
+      ['Поиск — бренд',{h:'Поиск','n':0},{h:'<span class="pill warn">Бюджет ограничен</span>','n':0},'6 руб','130 руб','410','11,4%','9','5,2×'],
+      ['Display — ретаргетинг',{h:'Display','n':0},{h:'<span class="pill check">Пауза</span>','n':0},'10 руб','210 руб','540','1,9%','19','2,9×']
     ]))+
-  note('How this works',
-    'Advertising figures come straight from the <b>Google Ads API</b> — the program reads them itself, no screenshots or spreadsheets. You see spend, clicks, bookings and return on each campaign, and can open any of them.');
+  note('Как это работает',
+    'Рекламные цифры приходят напрямую из <b>Google Ads API</b> — программа читает их сама, без скриншотов и таблиц. Видно расход, клики, брони и окупаемость по каждой кампании, любую можно открыть.');
 };
 
 /* -------- Breakdowns -------- */
 V.breakdowns=function(){
-  return '<div class="panelhead"><span class="muted">Campaign</span><span class="field" style="width:auto">Search — glamping EU</span>'+
-    '<button class="btn n s" style="margin-left:auto">Export CSV</button><button class="btn g s">Refresh</button></div>'+
-  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Search terms</span><span class="tab">Keywords</span><span class="tab">Devices</span><span class="tab">Locations</span><span class="tab">Ad schedule</span></div>'+
-  card('Search terms','rows: 46',
-    rows([['Search term'],['Match type'],['Impr.',1],['Clicks',1],['Spend',1],['Bookings',1]],[
-      ['glamping holidays europe','phrase','4,120','210','€ 64','9'],
-      ['luxury tent break','exact','2,880','164','€ 51','6'],
-      ['family holiday in nature','broad','3,540','142','€ 44','5'],
-      ['fishing weekend getaway','exact','1,960','98','€ 31','4']
+  return '<div class="panelhead"><span class="muted">Кампания</span><span class="field" style="width:auto">Поиск — глэмпинг ЕС</span>'+
+    '<button class="btn n s" style="margin-left:auto">Выгрузить CSV</button><button class="btn g s">Обновить</button></div>'+
+  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Поисковые запросы</span><span class="tab">Ключевые слова</span><span class="tab">Устройства</span><span class="tab">География</span><span class="tab">Расписание</span></div>'+
+  card('Поисковые запросы','строк: 46',
+    rows([['Запрос'],['Тип соответствия'],['Показы',1],['Клики',1],['Расход',1],['Брони',1]],[
+      ['glamping holidays europe','фраза','4 120','210','64 руб','9'],
+      ['luxury tent break','точно','2 880','164','51 руб','6'],
+      ['family holiday in nature','широкое','3 540','142','44 руб','5'],
+      ['fishing weekend getaway','точно','1 960','98','31 руб','4']
     ]))+
-  note('How this works',
-    'Breakdowns show which search terms, keywords, devices and countries actually bring bookings, so you can cut what does not work and add budget where it does.');
+  note('Как это работает',
+    'Разбивки показывают, какие запросы, ключевые слова, устройства и страны реально приносят брони — можно отключить то, что не работает, и добавить бюджет туда, где работает.');
 };
 
 /* -------- API access -------- */
 V.api=function(){
   return '<div class="grid twoe">'+
-    card('Access to the Google Ads API','',
-      '<p class="muted" style="margin:0 0 10px">Your own token, stored locally on your computer and never printed in the log.</p>'+
-      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="K8pQ2x••••••••••••" style="flex:1"><button class="btn n s">Show</button><button class="btn g s">Check</button></div>'+
-      '<div class="muted" style="margin-bottom:14px">Customer ID: 123-456-7890 · manager account 987-654-3210</div>'+
-      rows([['Item'],['Value']],[
-        ['Developer token','stored (encrypted, local)'],
-        ['OAuth refresh token','stored (encrypted, local)'],
-        ['Last update','25 Nov 2026, 09:12'],
-        ['Account balance','€ 118.40'],
-        ['API quota','2,450 calls left today']
+    card('Доступ к Google Ads API','',
+      '<p class="muted" style="margin:0 0 10px">Ваш собственный токен, хранится локально на компьютере и никогда не пишется в лог.</p>'+
+      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="K8pQ2x••••••••••••" style="flex:1"><button class="btn n s">Показать</button><button class="btn g s">Проверить</button></div>'+
+      '<div class="muted" style="margin-bottom:14px">Customer ID: 123-456-7890 · аккаунт-менеджер 987-654-3210</div>'+
+      rows([['Параметр'],['Значение']],[
+        ['Developer token','хранится (шифровано, локально)'],
+        ['OAuth refresh token','хранится (шифровано, локально)'],
+        ['Последнее обновление','25 ноя 2026, 09:12'],
+        ['Баланс аккаунта','118 руб'],
+        ['Квота API','осталось 2 450 вызовов на сегодня']
       ]))+
-    card('Status','',note('Privacy','The token stays on your computer. The program only calls the Google Ads API and shows exactly what Google answered. It is never sent anywhere else.','gr'))+
+    card('Статус','',note('Приватность','Токен остаётся на вашем компьютере. Программа обращается только к Google Ads API и показывает ровно то, что ответил Google. Больше никуда он не передаётся.','gr'))+
   '</div>'+
-  note('How this works',
-    'This screen keeps the Google Ads developer token and shows where the data comes from. Everything is local to your machine — safe to show.');
+  note('Как это работает',
+    'Этот экран хранит developer token Google Ads и показывает, откуда берутся данные. Всё локально на вашем компьютере — можно показывать.');
 };
 
 /* -------- Guest messages (chat) -------- */
@@ -682,96 +689,96 @@ V.chat=function(){
   return '<div class="grid two" style="gap:16px">'+
    '<div class="card"><div class="chatwrap">'+
     '<div class="convlist">'+
-      '<div class="conv on">'+av('A. Smith')+'<div class="t"><b>Room 14 — A. Smith</b><small>Hi! Could we get two extra breakfasts…</small></div><span class="dot"></span></div>'+
-      '<div class="conv">'+av('L. Garcia')+'<div class="t"><b>Room 22 — L. Garcia</b><small>What time is check-out?</small></div></div>'+
-      '<div class="conv">'+av('M. Müller')+'<div class="t"><b>Room 07 — M. Müller</b><small>Can we book a taxi?</small></div></div>'+
+      '<div class="conv on">'+av('A. Smith')+'<div class="t"><b>Домик 14 — A. Smith</b><small>Здравствуйте! Можно нам два дополнительных завтрака…</small></div><span class="dot"></span></div>'+
+      '<div class="conv">'+av('L. Garcia')+'<div class="t"><b>Домик 22 — L. Garcia</b><small>Во сколько выезд?</small></div></div>'+
+      '<div class="conv">'+av('M. Müller')+'<div class="t"><b>Домик 07 — M. Müller</b><small>Можно заказать такси?</small></div></div>'+
     '</div>'+
     '<div><div class="thread">'+
-      '<div class="msg g"><b>A. Smith · Room 14</b><br>Hi! Could we get two extra breakfasts tomorrow morning, around 08:30?<time>Guest · 10:24 · sent from the guest app</time></div>'+
-      '<div class="msg m"><b>Front desk</b><br>Of course — I have added 2 breakfasts for tomorrow at 08:30. Anything else?<time>Front desk · 10:26</time></div>'+
-    '</div><div class="composer"><input placeholder="Write a reply to the guest…"><button class="btn g">Send</button></div></div>'+
+      '<div class="msg g"><b>A. Smith · Домик 14</b><br>Здравствуйте! Можно нам два дополнительных завтрака завтра утром, около 08:30?<time>Гость · 10:24 · из приложения гостя</time></div>'+
+      '<div class="msg m"><b>Ресепшен</b><br>Конечно — добавил 2 завтрака на завтра, 08:30. Что-нибудь ещё?<time>Ресепшен · 10:26</time></div>'+
+    '</div><div class="composer"><input placeholder="Напишите ответ гостю…"><button class="btn g">Отправить</button></div></div>'+
    '</div></div>'+
-   '<div class="card"><div class="hd"><h3>Connected</h3><span class="m">Live</span></div><div class="bd">'+
-     rows([['Item'],['Value']],[
-       ['Channel','Guest app (web)'],
-       ['Language','Any language — e.g. English, Greek, German'],
-       ['Replies reach','guest\u2019s phone'],
-       ['Owner sees','same conversation']
+   '<div class="card"><div class="hd"><h3>Подключено</h3><span class="m">Онлайн</span></div><div class="bd">'+
+     rows([['Параметр'],['Значение']],[
+       ['Канал','Приложение гостя (веб)'],
+       ['Язык','Любой язык — например, русский, английский, немецкий'],
+       ['Ответ приходит','на телефон гостя'],
+       ['Владелец видит','ту же переписку']
      ])+
    '</div></div>'+
   '</div>'+
-  note('Demo conversation',
-    'These two messages are a <b>sample</b> — nothing is sent anywhere. In the real product this is the two-way chat: <b>the guest writes from YOUR web app</b> (the guest guide you give them on arrival), and the message lands here at the front desk. The guest sees the reply on their phone, in their own language.','gr');
+  note('Демо-переписка',
+    'Эти два сообщения — <b>образец</b>, никуда не отправляются. В реальном продукте это двусторонний чат: <b>гость пишет из ВАШЕГО веб-приложения</b> (гида, который вы даёте ему при заезде), и сообщение попадает сюда, на стойку. Ответ гость видит на своём телефоне, на своём языке.','gr');
 };
 
 /* -------- Charges to rooms (concept) -------- */
 V.charges=function(){
-  return '<div class="panelhead"><span class="chip">Concept</span><span class="muted">Synchronisation to be agreed</span></div>'+
-  card('Restaurant &amp; bar charges to rooms — today','posted / check',
-    rows([['Time'],['Outlet'],['Room'],['Items'],['Amount',1],['Status']],[
-      ['12:40','Restaurant','Room 14','Lunch ×2, wine','€ 46.00','<span class="pill ok">Posted</span>'],
-      ['13:05','Bar','Room 07','Beers ×4','€ 20.00','<span class="pill ok">Posted</span>'],
-      ['14:10','Restaurant','Room 22','Family lunch','€ 88.50','<span class="pill ok">Posted</span>'],
-      ['15:20','Excursions','Room 05','Boat trip ×2','€ 60.00','<span class="pill ok">Posted</span>'],
-      ['16:05','Bar','Room 31','Drinks','€ 14.00','<span class="pill check">Check</span>']
+  return '<div class="panelhead"><span class="chip">Концепт</span><span class="muted">синхронизация — по договорённости</span></div>'+
+  card('Ресторан и бар: счёт на объект — сегодня','проведено / проверка',
+    rows([['Время'],['Точка'],['Объект'],['Позиции'],['Сумма',1],['Статус']],[
+      ['12:40','Ресторан','Домик 14','Обед ×2, вино','46 руб','<span class="pill ok">Проведено</span>'],
+      ['13:05','Бар','Домик 07','Пиво ×4','20 руб','<span class="pill ok">Проведено</span>'],
+      ['14:10','Ресторан','Домик 22','Семейный обед','88 руб','<span class="pill ok">Проведено</span>'],
+      ['15:20','Экскурсии','Домик 05','Прогулка на лодке ×2','60 руб','<span class="pill ok">Проведено</span>'],
+      ['16:05','Бар','Домик 31','Напитки','14 руб','<span class="pill check">Проверить</span>']
     ]))+
   '<div style="height:16px"></div>'+
   '<div class="grid k4">'+
-    kpi('Step 1','Order','waiter takes it on a tablet')+
-    kpi('Step 2','Kitchen','order appears in the kitchen')+
-    kpi('Step 3','To the room','charge is posted to the room')+
-    kpi('Step 4','Check-out','settled in one bill')+
+    kpi('Шаг 1','Заказ','официант принимает на планшете')+
+    kpi('Шаг 2','Кухня','заказ появляется на кухне')+
+    kpi('Шаг 3','На объект','счёт уходит на объект')+
+    kpi('Шаг 4','Выезд','закрывается одним счётом')+
   '</div>'+
-  note('How this works',
-    'The guest orders, the charge goes onto their room, and at check-out it is settled together with the stay. A charge marked <b>“Check”</b> has not moved for a while — the program flags it so nothing is lost. '+
-    'This is a <b>concept screen</b>: the exact synchronisation with your restaurant system is agreed during the setup.','am');
+  note('Как это работает',
+    'Гость заказывает, счёт уходит на его объект, а на выезде закрывается вместе с проживанием. Счёт с пометкой <b>«Проверить»</b> давно не двигался — программа подсвечивает его, чтобы ничего не потерялось. '+
+    'Это <b>концепт-экран</b>: точная синхронизация с вашей ресторанной системой согласуется на этапе настройки.','am');
 };
 
 /* -------- About this demo -------- */
 V.about=function(){
   return '<div class="grid twoe">'+
-    card('About this demo','',note('Stand-alone demo',
-      'This is a <b>stand-alone demo</b> with <b>sample data only</b>. It is not connected to any real system and shows nothing from a live database — safe to show to anyone.',
+    card('Об этой демо','',note('Отдельная демо',
+      'Это <b>отдельная демо</b> только с <b>демо-данными</b>. Она не подключена к реальной системе и не показывает ничего из живой базы — можно показывать кому угодно.',
       'gr'))+
-    card('Your programme, your way','',
+    card('Ваша программа, под вас','',
       '<ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.7">'+
-      '<li>Every screen can be <b>tuned to your needs</b> — your objects, your tariffs, your reports.</li>'+
-      '<li>Delivered as a <b>web app</b> (any browser) or a <b>desktop app for Windows and Mac</b>.</li>'+
-      '<li>Data comes from your booking system <b>via the API</b> — nothing is typed twice.</li>'+
-      '<li>Interface language: <b>any</b> — chosen to suit your guests (English, Greek, German, or whatever you need).</li>'+
-      '<li>Works offline on a laptop as well as online.</li>'+
+      '<li>Каждый экран <b>настраивается под вас</b> — ваши объекты, ваши тарифы, ваши отчёты.</li>'+
+      '<li>Поставляется как <b>веб-приложение</b> (любой браузер) или <b>настольная программа для Windows и Mac</b>.</li>'+
+      '<li>Данные приходят из вашей системы бронирования <b>через API</b> — вручную ничего не дублируется.</li>'+
+      '<li>Язык интерфейса: <b>любой</b> — под ваших гостей (русский, английский, немецкий, какой нужно).</li>'+
+      '<li>Работает и офлайн на ноутбуке, и онлайн.</li>'+
       '</ul>')+
   '</div>'+
-  note('What a client sees',
-    'On every screen there is a warm “How this works” note. They explain where the numbers come from and how they are calculated, so a client understands the product without anyone standing next to them.');
+  note('Что видит клиент',
+    'На каждом экране есть тёплая подсказка «Как это работает». Она объясняет, откуда берутся цифры и как считаются, — клиент понимает продукт без человека рядом.');
 };
 
 /* ============================================================
    NAVIGATION
    ============================================================ */
 var SEC=[
- {t:'Arrivals on date', items:[['arrivals','Arrivals','arrivals']]},
- {t:'Booking analytics', items:[
-   ['dashboard','Dashboard','dashboard'],['compare','Compare','compare'],
-   ['detail','Analytics detail','detail'],['guests','Guests','guests'],
-   ['rates','Rates & occupancy','rates'],['breakfasts','Breakfasts','breakfast'],
-   ['reports','Reports','reports'],['upcoming','Upcoming','upcoming']]},
- {t:'Tent rental + Fishing', items:[
-   ['grid','Grid','grid'],['fishing','Fishing','fishing'],['occupancy','Tent occupancy','occupancy']]},
- {t:'Salaries', items:[['payroll','Payroll','payroll']]},
+ {t:'Заезды на дату', items:[['arrivals','Заезды','arrivals']]},
+ {t:'Аналитика броней', items:[
+   ['dashboard','Обзор','dashboard'],['compare','Сравнение','compare'],
+   ['detail','Аналитика подробно','detail'],['guests','Гости','guests'],
+   ['rates','Тарифы и загрузка','rates'],['breakfasts','Завтраки','breakfast'],
+   ['reports','Отчёты','reports'],['upcoming','Предстоящие','upcoming']]},
+ {t:'Аренда объектов + Рыбалка', items:[
+   ['grid','Сетка','grid'],['fishing','Рыбалка','fishing'],['occupancy','Загрузка объектов','occupancy']]},
+ {t:'Зарплаты', items:[['payroll','Зарплаты','payroll']]},
  {t:'Google Ads', items:[
-   ['campaigns','Campaigns','campaigns'],['breakdowns','Breakdowns','breakdowns'],['api','API access','api']]},
- {t:'Guests', items:[['chat','Messages','chat']]},
- {t:'Concept', items:[['charges','Charges to rooms','charges']]},
- {t:'', items:[['about','About this demo','about']]}
+   ['campaigns','Кампании','campaigns'],['breakdowns','Разбивки','breakdowns'],['api','Доступ к API','api']]},
+ {t:'Гости', items:[['chat','Сообщения','chat']]},
+ {t:'Концепт', items:[['charges','Счёт на объект','charges']]},
+ {t:'', items:[['about','Об этой демо','about']]}
 ];
-var TITLES={arrivals:'Arrivals on date',dashboard:'Dashboard',compare:'Compare periods',detail:'Analytics detail',
- guests:'Returning guests',rates:'Rates & occupancy',breakfasts:'Breakfast plan',reports:'Owner\u2019s reports',
- upcoming:'Upcoming bookings',grid:'Tent grid',fishing:'Fishing',occupancy:'Tent occupancy',payroll:'Payroll',
- campaigns:'Campaigns',breakdowns:'Breakdowns',api:'API access',chat:'Guest messages',charges:'Charges to rooms',
- about:'About this demo'};
-var SUBS={arrivals:'Wednesday, 25 November 2026',payroll:'November 2026',chat:'2 new messages',
- charges:'concept',dashboard:'all time'};
+var TITLES={arrivals:'Заезды на дату',dashboard:'Обзор',compare:'Сравнение периодов',detail:'Аналитика подробно',
+ guests:'Постоянные гости',rates:'Тарифы и загрузка',breakfasts:'План завтраков',reports:'Отчёты владельцу',
+ upcoming:'Предстоящие брони',grid:'Сетка объектов',fishing:'Рыбалка',occupancy:'Загрузка объектов',payroll:'Зарплаты',
+ campaigns:'Кампании',breakdowns:'Разбивки',api:'Доступ к API',chat:'Сообщения гостей',charges:'Счёт на объект',
+ about:'Об этой демо'};
+var SUBS={arrivals:'среда, 25 ноября 2026',payroll:'Ноябрь 2026',chat:'2 новых сообщения',
+ charges:'концепт',dashboard:'за всё время'};
 
 function renderNav(){
   var h='';

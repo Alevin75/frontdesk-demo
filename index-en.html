@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Front desk — demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Палитра нового сайта «Остров»: бумага, чернила, терракота. */
+  --ink:#10120e; --muted:#5c6058; --bg:#f6f5f1; --card:#fff;
+  --line:rgba(16,18,14,.14); --line2:rgba(16,18,14,.08);
+  --side:#12140f; --side2:#1a1d17; --side-ink:#c6b8a2; --side-soft:#8a8272;
+  --accent:#a34a32; --accent-d:#8d3d29; --on-accent:#fbf7f4;
+  --green:#4c6b45; --green-d:#3c5737;          /* только статус «свободно / всё хорошо» */
+  --amber:#a8762c; --red:#a8402c; --blue:#5a6b7a;
+  --tint:#f4f1ea;                              /* бумажная подложка блоков */
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;  /* заголовки как на сайте */
+  --sh:0 1px 2px rgba(16,18,14,.05), 0 10px 26px rgba(16,18,14,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Inter","Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.45}
+.app{display:flex;min-height:100vh}
+/* ---------- sidebar ---------- */
+.side{width:250px;background:var(--side);color:var(--side-ink);flex:0 0 auto;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-d));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+.brand b{color:#fff;font-size:14.5px;font-weight:700;letter-spacing:.01em;display:block}
+.brand span{font-size:10.5px;color:var(--side-soft);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.prop{margin:14px 14px 8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.prop span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--side-soft);font-weight:700}
+.prop b{color:#fff;font-weight:600;font-size:14px}
+nav{padding:4px 10px 20px}
+.sect{margin-top:14px}
+.sect>.st{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--side-soft);font-weight:700;padding:6px 12px 4px}
+nav button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;color:var(--side-ink);
+  font:inherit;font-weight:500;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer;text-align:left}
+nav button svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+nav button:hover{background:rgba(255,255,255,.06)}
+nav button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+nav button .badge{margin-left:auto;background:var(--on-accent);color:var(--accent-d);font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px}
+.side .foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:var(--side-soft);line-height:1.5}
+/* ---------- main ---------- */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 20px;position:sticky;top:0;z-index:10}
+.topbar h1{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:.01em;line-height:1.05;margin:0}
+.topbar .sub{font-size:12px;color:var(--muted);font-weight:500}
+.topbar .demo{margin-left:auto;display:flex;align-items:center;gap:8px}
+.chip{background:var(--tint);color:var(--accent-d);border:1px solid var(--line);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.chip.g{background:#f1efe9;color:#5c6058;border-color:rgba(16,18,14,.12)}
+.chip.b{background:#f1efe9;color:#6a6559;border-color:rgba(16,18,14,.12)}
+.view{padding:22px;display:none}
+.view.on{display:block}
+.grid{display:grid;gap:16px}
+.k4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.two{grid-template-columns:1.4fr 1fr}
+.twoe{grid-template-columns:1fr 1fr}
+@media(max-width:1080px){.k4{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.twoe{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh)}
+.card .hd{padding:13px 16px;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card .hd h3{font-family:var(--serif);margin:0;font-size:17px;font-weight:600;letter-spacing:.01em}
+.card .hd .m{font-size:11px;color:#857e71;font-weight:700;text-transform:uppercase;letter-spacing:.09em;white-space:nowrap}
+.card .bd{padding:14px 16px}
+.kpi{padding:16px}
+.kpi .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;min-height:29px}
+.kpi .val{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:.005em;line-height:1.05;margin-top:0;font-variant-numeric:lining-nums tabular-nums}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi .up{color:var(--green-d);font-weight:700}
+.kpi .dn{color:var(--red);font-weight:700}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line2);font-size:13px;vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.pill.ok{background:#eef2ea;color:var(--green-d)}
+.pill.check{background:#f8ece7;color:var(--red)}
+.pill.in{background:#f1efe9;color:#6a6559}
+.pill.warn{background:#f9f2e6;color:#8a5f1f}
+.pill.arr{background:#f7e4da;color:var(--accent-d)}
+.pill.busy{background:#f0d2c3;color:var(--accent-d)}
+.pill.dens{background:var(--accent);color:var(--on-accent)}
+.pill.free{background:#eae7df;color:#8f887b}
+.avatar{width:30px;height:30px;border-radius:50%;background:#e8e3d8;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex:0 0 auto}
+.gname{display:flex;align-items:center;gap:9px}
+.gname b{font-weight:600}
+.gname .txt{min-width:0}
+.gname .txt>span{display:block;font-size:11.5px;color:var(--muted);font-weight:400}
+.bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-d))}
+/* charts */
+.bars{display:flex;align-items:flex-end;gap:10px;height:190px;padding-top:8px}
+.bars .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%}
+.bars .cl{font-size:10.5px;color:var(--muted);font-weight:600}
+.bars .cv{font-size:10.5px;color:var(--ink);font-weight:700}
+.bars .cb{width:100%;max-width:44px;background:linear-gradient(180deg,var(--accent),var(--accent-d));border-radius:7px 7px 0 0;min-height:4px}
+.pie{display:flex;align-items:center;gap:18px}
+.pie .donut{width:150px;height:150px;border-radius:50%;flex:0 0 auto}
+.legend{font-size:12.5px}
+.legend div{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.legend b{margin-left:auto;font-variant-numeric:tabular-nums}
+/* chat */
+.chatwrap{display:grid;grid-template-columns:290px 1fr}
+@media(max-width:900px){.chatwrap{grid-template-columns:minmax(0,1fr)}}
+.convlist{border-right:1px solid var(--line2)}
+.conv{padding:12px 14px;border-bottom:1px solid var(--line2);cursor:pointer;display:flex;gap:10px}
+.conv.on{background:var(--tint)}
+.conv .t{flex:1;min-width:0}
+.conv b{font-weight:600;font-size:13px;display:block}
+.conv small{color:var(--muted);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex:0 0 auto}
+.thread{padding:16px;display:flex;flex-direction:column;gap:12px;min-height:300px}
+.msg{max-width:74%;padding:10px 13px;border-radius:12px;font-size:13.5px}
+.msg.g{background:var(--tint);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.m{background:var(--accent);color:var(--on-accent);align-self:flex-end;border-bottom-right-radius:3px}
+.msg time{display:block;font-size:11px;opacity:.75;margin-top:4px}
+.composer{border-top:1px solid var(--line2);padding:12px 14px;display:flex;gap:10px}
+.composer input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit}
+/* note */
+.note{background:var(--tint);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin-top:16px}
+.note .nh{display:flex;align-items:center;gap:8px;font-weight:700;font-size:12.5px;color:var(--accent-d);margin-bottom:5px}
+.note .nh svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.note .nb{font-size:13px;color:#4a4f46;line-height:1.55}
+.note .nb code{background:#eae4d8;border-radius:4px;padding:1px 5px;font-size:12.5px}
+.note.gr{background:#f2efe8;border-color:#e3ddcf;border-left-color:var(--warm)}
+.note.gr .nh{color:#6c6353}
+.note.am{background:#f9f2e6;border-color:#eadcc0;border-left-color:var(--amber)}
+.note.am .nh{color:#8a5f1f}
+/* misc */
+.panelhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.btn{border:0;border-radius:10px;padding:9px 14px;font:inherit;font-weight:600;font-size:13px;cursor:pointer}
+.btn.g{background:var(--accent);color:var(--on-accent)}
+.btn.n{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.btn.s{padding:6px 11px;font-size:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;font-size:13px;width:100%}
+.row{display:flex;align-items:center;gap:10px}
+.muted{color:var(--muted);font-size:12.5px}
+tr:hover td{background:#faf8f3}
+::selection{background:rgba(163,74,50,.18)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.side::-webkit-scrollbar,.card .bd::-webkit-scrollbar{width:8px;height:8px}
+.side::-webkit-scrollbar-thumb{background:rgba(198,184,162,.28);border-radius:8px}
+.card .bd::-webkit-scrollbar-thumb{background:rgba(16,18,14,.18);border-radius:8px}
+.sep{height:1px;background:var(--line2);margin:14px 0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .cd{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:11px;text-align:center}
+.cal .cd b{display:block;font-size:12.5px}
+.gridcells{display:grid;gap:3px;font-size:11.5px}
+.gridcells .h{font-weight:700;color:var(--muted);text-align:center;padding:4px 0}
+.gridcells .r{font-weight:600;padding:5px 6px;white-space:nowrap}
+.cell{border-radius:6px;padding:5px 0;text-align:center;font-weight:600}
+.cell.free{background:#eae7df;color:#a49b8b}
+.cell.busy{background:#f0d2c3;color:var(--accent-d)}
+.cell.dens{background:var(--accent);color:var(--on-accent)}
+
+/* ================= MOBILE FIX (added 23.11.2026) ================= */
+@media (max-width:820px){
+  .app{flex-direction:column}
+  /* сайдбар -> компактная шапка: логотип + объект, меню уходит в строку-скролл */
+  .side{width:100%;position:static;height:auto;max-height:none;overflow:visible;
+        display:grid;grid-template-columns:auto 1fr;align-items:center}
+  .brand{padding:10px 12px 8px;border-bottom:0}
+  .brand .mark{width:26px;height:26px;font-size:12.5px}
+  .brand b{font-size:13.5px}
+  .brand span{font-size:9.5px}
+  .prop{margin:8px 12px 8px 0;padding:6px 10px}
+  .prop span{font-size:9px}
+  .prop b{font-size:12.5px}
+  .side .foot{display:none}
+  #nav{grid-column:1 / -1;display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;
+       padding:2px 12px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #nav::-webkit-scrollbar{display:none}
+  #nav .sect{display:flex;align-items:center;gap:7px;margin:0}
+  #nav .sect>.st{display:none}
+  #nav button{width:auto;white-space:nowrap;flex:0 0 auto;background:rgba(255,255,255,.07);
+              border-radius:999px;padding:7px 12px;font-size:12.5px;gap:7px}
+  #nav button svg{width:15px;height:15px}
+  #nav button.on{background:var(--accent);color:var(--on-accent)}
+  #nav button .badge{margin-left:0}
+
+  .topbar{height:auto;min-height:0;padding:10px 12px;flex-wrap:wrap;gap:4px 8px}
+  .topbar h1{font-size:20px;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar .sub{font-size:11.5px;order:3;width:100%}
+  .topbar .demo{margin-left:auto;flex:0 0 auto;gap:6px}
+  .chip{font-size:9.5px;padding:3px 7px;letter-spacing:.03em}
+
+  .view{padding:12px 12px 26px}
+  .grid{gap:12px;min-width:0}
+  .grid,.convlist,.thread,.conv{min-width:0}
+  .k4,.k3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two,.twoe{grid-template-columns:minmax(0,1fr)}
+  .card{border-radius:12px;overflow:hidden}
+  .card .hd{padding:11px 12px;flex-wrap:wrap;gap:4px 10px}
+  .card .hd h3{font-size:15.5px}
+  .card .bd{padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .kpi{padding:12px}
+  .kpi .lbl{min-height:0;font-size:10px}
+  .kpi .val{font-size:27px}
+  .kpi .sub{font-size:11px}
+
+  table{min-width:560px}
+  th,td{padding:9px 8px;font-size:12.5px}
+  .cal{min-width:560px}
+  .gridcells{min-width:600px;font-size:11px}
+
+  .bars{height:150px;gap:5px}
+  .bars .cl,.bars .cv{font-size:9.5px}
+  .pie{flex-direction:column;align-items:flex-start;gap:12px}
+  .pie .donut{width:132px;height:132px}
+
+  .chatwrap{grid-template-columns:minmax(0,1fr)}
+  .convlist{border-right:0;border-bottom:1px solid var(--line2);max-height:230px;overflow-y:auto}
+  .thread{padding:12px;min-height:200px}
+  .msg{max-width:90%;font-size:13px}
+  .composer{padding:10px 12px}
+
+  .panelhead{gap:8px;margin-bottom:12px}
+  .btn{padding:8px 12px;font-size:12.5px}
+  .btn.s{padding:6px 10px;font-size:11.5px}
+  .note{padding:11px 12px}
+  .note .nb{font-size:12.5px}
+}
+@media (max-width:430px){
+  .k4,.k3{grid-template-columns:1fr}
+  table{min-width:470px}
+  .cal{min-width:470px}
+  .gridcells{min-width:520px}
+}
+.wrap-x{overflow-x:hidden}
+/* ================= /MOBILE FIX ================= */
+
+/* --- переключатель языка РУС/АНГЛ (добавлено 28.11.2026) --- */
+.lang{margin-left:auto;display:flex;gap:2px;background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px}
+.lang a{font:700 11px/1 Inter,"Segoe UI",sans-serif;letter-spacing:.04em;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:999px}
+.lang a.on{background:var(--accent);color:var(--on-accent)}
+.topbar .demo{margin-left:8px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="mark">FD</div>
+      <div><b>Front desk</b><span>Demo</span></div>
+    </div>
+    <div class="prop"><span>Property</span><b>Your property</b></div>
+    <nav id="nav"></nav>
+    <div class="foot">
+      Demo panel · sample data.<br>
+      Not connected to any real system.
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <h1 id="ttl">Today</h1>
+      <span class="sub" id="tsub"></span>
+      <div class="lang"><a href="index.html">РУС</a><a class="on" href="index-en.html">АНГЛ</a></div>
+      <div class="demo">
+        <span class="chip">Demo</span>
+        <span class="chip g">Sample data</span>
+      </div>
+    </div>
+    <div id="views"></div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   ICONS
+   ============================================================ */
+function ic(n){
+  var p={
+   arrivals:'<path d="M4 18h16M7 18V7l5-3 5 3v11M10 12h4"/>',
+   dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+   compare:'<path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/>',
+   detail:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+   guests:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 11a3 3 0 1 0 0-6M18 20a5 5 0 0 0-3-4.6"/>',
+   rates:'<path d="M3 17l5-6 4 3 5-8 4 4"/><path d="M3 21h18"/>',
+   breakfast:'<path d="M4 8h16M6 8V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v2M5 8v9a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8"/>',
+   reports:'<path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>',
+   upcoming:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+   grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+   fishing:'<path d="M3 12c4-5 14-5 18 0-4 5-14 5-18 0z"/><circle cx="9" cy="12" r="1.5"/><path d="M15 8l4-4"/>',
+   occupancy:'<path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/>',
+   payroll:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.8 1.8 0 0 1 0 3.6h-4a1.8 1.8 0 0 0 0 3.6h4"/>',
+   campaigns:'<path d="M3 11l16-6v14L3 13z"/><path d="M7 12.5V18a2 2 0 0 0 2 2h1v-5"/>',
+   breakdowns:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/>',
+   api:'<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/>',
+   chat:'<path d="M21 12a8 8 0 0 1-11.6 7.2L4 20l1-4.4A8 8 0 1 1 21 12z"/>',
+   charges:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 14h6M7 17h4"/>',
+   about:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'
+  };
+  return '<svg viewBox="0 0 24 24">'+(p[n]||p.about)+'</svg>';
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function note(t,body,kind){
+  return '<div class="note '+(kind||'')+'"><div class="nh">'+ic('about')+'<span>'+t+'</span></div><div class="nb">'+body+'</div></div>';
+}
+function card(title,meta,body,cls){
+  return '<div class="card '+(cls||'')+'"><div class="hd"><h3>'+title+'</h3>'+(meta?'<span class="m">'+meta+'</span>':'')+'</div><div class="bd">'+body+'</div></div>';
+}
+function kpi(lbl,val,sub){ return '<div class="card kpi"><div class="lbl">'+lbl+'</div><div class="val">'+val+'</div><div class="sub">'+(sub||'')+'</div></div>'; }
+function av(name){
+  var p=(name||'?').trim().split(/\s+/); var s=(p[p.length-1]||'?')[0].toUpperCase();
+  return '<span class="avatar">'+s+'</span>';
+}
+function rows(head,data){
+  function ch(c){ return (c&&c.h!==undefined)?c.h:(''+(c===undefined||c===null?'':c)); }
+  function isNum(h){ var s=(''+h).trim(); return !!s && s.indexOf('<')<0 &&
+      (/^€/.test(s)||/%$/.test(s)||/^\d{1,3}(,\d{3})*$/.test(s)||/^\d+$/.test(s)); }
+  var t=head.map(function(x){return (x&&x.h!==undefined)?x.h:(x&&x[0]!==undefined?x[0]:'');});
+  var numCol=[];
+  for(var j=0;j<t.length;j++){
+    var any=false,all=true;
+    for(var i=0;i<data.length;i++){ var s=ch(data[i][j]); if(s==='') continue; any=true; if(!isNum(s)){all=false;break;} }
+    numCol[j]=any&&all;
+  }
+  var h='<tr>'+head.map(function(x,j){
+    var n=numCol[j] || (x&&x.n!==undefined?x.n:(x&&x[1]));
+    return '<th'+(n?' class="num"':'')+'>'+t[j]+'</th>';
+  }).join('')+'</tr>';
+  var b=data.map(function(r){return '<tr>'+r.map(function(c,j){
+    var n=numCol[j] || (c&&c.n!==undefined?c.n:0);
+    return '<td'+(n?' class="num"':'')+'>'+ch(c)+'</td>';
+  }).join('')+'</tr>';}).join('');
+  return '<table>'+h+b+'</table>';
+}
+function bars(items){
+  var max=Math.max.apply(null,items.map(function(i){return i[1];}));
+  return '<div class="bars">'+items.map(function(i){
+    return '<div class="col"><div class="cv">'+i[2]+'</div><div class="cb" style="height:'+Math.round(i[1]/max*140)+'px"></div><div class="cl">'+i[0]+'</div></div>';
+  }).join('')+'</div>';
+}
+
+/* ============================================================
+   SCREEN CONTENT
+   ============================================================ */
+var V={};
+
+/* -------- Arrivals on date -------- */
+V.arrivals=function(){
+  return '<div class="panelhead">'+
+    '<div class="tabs"><span class="tab on">Today</span><span class="tab">Tomorrow</span></div>'+
+    '<span class="muted">Wednesday, 25 November</span>'+
+    '<button class="btn n s" style="margin-left:auto">Copy list for WhatsApp</button>'+
+    '<button class="btn n s">Save to Word</button>'+
+    '<button class="btn g s">Refresh</button></div>'+
+  card('Arrivals &amp; departures — today','12 arrivals',
+    rows([['Object'],['Guest'],['Nights',1],['Guests',1],['Arrival'],['Status'],['Balance',1]],
+    [
+      ['Bungalow 14',{h:'<span class="gname">'+av('A. Smith')+'<span class="txt"><b>A. Smith</b><span>+44 7... · 2 adults</span></span></span>','n':0},'3','2','14:00','<span class="pill ok">In house</span>','€ 435.00'],
+      ['Bungalow 22','<span class="gname">'+av('L. Garcia')+'<span class="txt"><b>L. Garcia</b><span>bathhouse · transfer</span></span></span>','2','4','15:30','<span class="pill arr">Arriving</span>','€ 620.00'],
+      ['Villa tent 07','<span class="gname">'+av('M. Müller')+'<span class="txt"><b>M. Müller</b><span>no phone yet</span></span></span>','4','2','16:00','<span class="pill arr">Arriving</span>','€ 780.00'],
+      ['Safari tent 31','<span class="gname">'+av('G. Rossi')+'<span class="txt"><b>G. Rossi</b><span>fishing, 2 anglers</span></span></span>','1','2','17:15','<span class="pill arr">Arriving</span>','€ 195.00'],
+      ['Bungalow 05','<span class="gname">'+av('P. Nowak')+'<span class="txt"><b>P. Nowak</b><span>hot tub</span></span></span>','5','3','18:00','<span class="pill arr">Arriving</span>','€ 940.00'],
+      ['Tent 18','<span class="gname">'+av('E. Dupont')+'<span class="txt"><b>E. Dupont</b><span>car parking</span></span></span>','2','2','19:30','<span class="pill arr">Arriving</span>','€ 360.00']
+    ])
+  )+
+  '<div style="height:16px"></div>'+
+  card('Messages to guests','ready to send',
+    '<p class="muted" style="margin:0 0 10px">Arrival text with the address, check-in time and breakfast hours. Copy it and send — nothing goes out automatically, you confirm the send.</p>'+
+    '<div class="row"><button class="btn n s">Preview text</button><button class="btn g s">Copy text</button></div>')+
+  note('How this works',
+    'Arrivals are loaded <b>automatically from your booking system (TravelLine)</b> — the program reads them through the API, so nobody types them in. '+
+    'The list can be copied in one click for WhatsApp/MAX or saved as a Word file for the reception desk.');
+};
+
+/* -------- Dashboard -------- */
+V.dashboard=function(){
+  return '<div class="panelhead">'+
+    '<button class="btn n s">Upload TravelLine file</button>'+
+    '<button class="btn g s" style="margin-left:auto">Sync with TravelLine</button></div>'+
+  '<div class="grid k4">'+
+    kpi('Revenue','€ 412,600','all time')+
+    kpi('Bookings','1,248','unique')+
+    kpi('Nights','3,910','sold')+
+    kpi('Breakfasts','6,240','portions')+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  '<div class="grid k3">'+
+    kpi('Avg. check','€ 330','per booking')+
+    kpi('ADR','€ 105','price per night')+
+    kpi('RevPAR','€ 71','per object per night')+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  '<div class="grid two">'+
+    card('Revenue by week','€ / week',bars([
+      ['W38',11800,'€11.8k'],['W39',13200,'€13.2k'],['W40',10400,'€10.4k'],['W41',14900,'€14.9k'],['W42',16200,'€16.2k'],['W43',13800,'€13.8k'],['W44',17100,'€17.1k']]))+
+    card('Revenue structure','by tariff',(function(){
+      var d=[['Direct',42],['Aggregators',33],['Breakfasts',14],['Extras',11]];
+      var cl=['#a34a32','#5a6b7a','#a8762c','#8b7a63'];
+      var g='conic-gradient(';var acc=0;var parts=[];
+      d.forEach(function(x,i){parts.push(cl[i]+' '+acc+'% '+(acc+x[1])+'%');acc+=x[1];});
+      return '<div class="pie"><div class="donut" style="background:conic-gradient('+parts.join(',')+')"></div><div class="legend">'+
+        d.map(function(x,i){return '<div><i style="background:'+cl[i]+'"></i>'+x[0]+'<b>'+x[1]+'%</b></div>';}).join('')+'</div></div>';
+    })())+
+  '</div>'+
+  '<div style="height:16px"></div>'+
+  card('Smart analysis — this month','',
+    '<p style="margin:0;font-size:13.5px;color:#4a4f46">November is <b>11% above</b> October. Occupancy is 82% on weekends; the mid-week dip is the main growth opportunity. Average length of stay is 2.4 nights. Direct bookings rose to 42% of revenue. Note: 3 bookings are missing an object number — load an ArrivalsReport to fix them.</p>')+
+  note('How this works',
+    'These figures are <b>calculated by the program from your bookings</b> — nothing is entered by hand. '+
+    'The formulas are standard: <code>ADR = revenue ÷ nights sold</code>, <code>RevPAR = revenue ÷ (objects × nights)</code>, <code>Avg. check = revenue ÷ bookings</code>. '+
+    'Bookings come from TravelLine <b>via the API</b> (or from a file you upload). The charts update as soon as new bookings arrive.');
+};
+
+/* -------- Compare -------- */
+V.compare=function(){
+  return '<div class="panelhead">'+
+    '<span class="muted">Period 1</span><span class="field" style="width:auto">Nov 2026</span>'+
+    '<span class="muted">vs</span><span class="field" style="width:auto">Nov 2025</span>'+
+    '<button class="btn g s">Compare</button></div>'+
+  card('Comparison','change (2 → 1)',
+    rows([['Indicator'],[{h:'Nov 2026',n:1}],[{h:'Nov 2025',n:1}],[{h:'Δ',n:1}]],[
+      ['Revenue','€ 41,200','€ 37,000','<span class="pill ok">+11%</span>'],
+      ['Bookings','128','121','<span class="pill ok">+6%</span>'],
+      ['Nights','402','388','<span class="pill ok">+4%</span>'],
+      ['Avg. length of stay','3.1','3.2','<span class="pill check">-3%</span>'],
+      ['ADR','€ 102','€ 95','<span class="pill ok">+7%</span>'],
+      ['RevPAR','€ 74','€ 68','<span class="pill ok">+9%</span>']
+    ]))+
+  note('How this works',
+    'Pick any two periods — the program lines them up and shows the change in each indicator. Handy before a price review or an owners\u2019 meeting.');
+};
+
+/* -------- Analytics detail -------- */
+V.detail=function(){
+  return '<div class="grid k4">'+
+    kpi('Booking depth','38 days','average, ahead of arrival')+
+    kpi('Early bookings','31%','more than 30 days ahead')+
+    kpi('Last-minute','12%','less than 3 days ahead')+
+    kpi('Avg. stay','2.4 nights','')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Revenue by source','',rows([['Source'],['Revenue'],[{h:'Share',n:1}]],[
+      ['Direct',{h:'€ 173,300','n':0},'42%'],
+      ['Booking.com','€ 111,400','27%'],
+      ['Airbnb','€ 61,900','15%'],
+      ['Expedia','€ 41,300','10%'],
+      ['Other','€ 24,700','6%']]))+
+    card('Booking depth','days before arrival',bars([['0-2',12,'12%'],['3-7',22,'22%'],['8-14',19,'19%'],['15-30',16,'16%'],['31-60',18,'18%'],['60+',13,'13%']]))+
+  '</div>'+
+  note('How this works',
+    'Deeper analytics on the same bookings: where guests come from, how far ahead they book, which weekday peaks. All of it is derived from the booking data — no extra input.');
+};
+
+/* -------- Guests -------- */
+V.guests=function(){
+  return '<div class="grid k3">'+
+    kpi('Unique guests','864','all time')+
+    kpi('Repeat guests','213','booked more than once')+
+    kpi('Top-10 share','18%','of revenue')+
+  '</div><div style="height:16px"></div>'+
+  card('Top-10 returning guests','sort: by revenue',
+    rows([['Guest'],['Visits',1],['Nights',1],['Revenue',1],['Last visit']],[
+      ['E. Osolovskaya','9','24','€ 6,120','12 Nov 2026'],
+      ['A. Smith','7','19','€ 4,980','25 Nov 2026'],
+      ['M. Müller','6','22','€ 4,410','25 Nov 2026'],
+      ['L. Garcia','5','13','€ 3,120','25 Nov 2026'],
+      ['P. Nowak','5','17','€ 2,960','25 Nov 2026']
+    ]))+
+  note('How this works',
+    'The program groups bookings by guest and counts repeat visits, nights and revenue. Useful for thank-you offers to your best customers.');
+};
+
+/* -------- Rates & occupancy -------- */
+V.rates=function(){
+  return '<div class="grid k3">'+
+    kpi('Average ADR','€ 105','of the period')+
+    kpi('Nights sold','3,910','all time')+
+    kpi('Occupancy','74%','object-nights sold')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('ADR by month','€ / night',bars([['Jul',128,'128'],['Aug',134,'134'],['Sep',112,'112'],['Oct',98,'98'],['Nov',102,'102']]))+
+    card('ADR and occupancy','by month',bars([['Jul',96,'96%'],['Aug',99,'99%'],['Sep',88,'88%'],['Oct',72,'72%'],['Nov',74,'74%']]))+
+  '</div>'+
+  note('How this works',
+    'Rate and occupancy side by side, so you can see whether a higher price cost you occupancy — or gained you revenue. Calculated from the loaded bookings.');
+};
+
+/* -------- Breakfasts -------- */
+V.breakfasts=function(){
+  return '<div class="panelhead"><span class="muted">From</span><span class="field" style="width:auto">23.11.2026</span>'+
+    '<span class="muted">to</span><span class="field" style="width:auto">30.11.2026</span>'+
+    '<button class="btn g s">Apply</button><button class="btn n s" style="margin-left:auto">Export to Excel for the kitchen</button></div>'+
+  card('Breakfast plan by date','34 portions',
+    rows([['Date'],['Object'],['Portions',1]],[
+      ['23.11','Bungalow 14','2'],['23.11','Bungalow 22','4'],['23.11','Villa tent 07','2'],
+      ['23.11','Safari tent 31','2'],['23.11','Bungalow 05','3'],['23.11','Tent 18','2'],
+      ['24.11','Bungalow 14','2'],['24.11','Bungalow 05','3'],
+      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'<b>34</b>','n':1}]
+    ]))+
+  note('How this works',
+    'Every booking that includes breakfast becomes a number of portions per date — the kitchen gets a ready plan and an Excel file. No more counting by hand.');
+};
+
+/* -------- Reports -------- */
+V.reports=function(){
+  return '<div class="panelhead"><span class="muted">Quick period</span>'+
+    '<div class="tabs"><span class="tab on">Last week</span><span class="tab">This month</span><span class="tab">Year to date</span><span class="tab">Custom</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Generate Excel report</button>'+
+    '<button class="btn g s">Copy owner\u2019s report</button></div>'+
+  card('Owner\u2019s report — preview','',
+    '<div style="background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;white-space:pre-line">REPORT 01–07 Nov 2026\n\n  Total revenue        € 9,880\n  Bookings             32\n  Guests               71\n  Nights               84\n  Breakfasts           62\n  Average check        € 309\n  ADR (per night)      € 118\n  RevPAR (per object)  € 82\n\n  Direct / Aggregators / Breakfasts\n  Structure of sales by channel</div>')+
+  note('How this works',
+    'Reports for the owner build themselves from the same data — one click to copy the text into WhatsApp/Telegram, or to get a ready Excel file with a summary, a chart and a day-by-day breakdown.');
+};
+
+/* -------- Upcoming -------- */
+V.upcoming=function(){
+  return '<div class="grid k4">'+
+    kpi('Booked','412','object-nights')+
+    kpi('Avg. occupancy','58%','next 6 months')+
+    kpi('Free nights','1,120','next 6 months')+
+    kpi('Avg. check','€ 340','')+
+  '</div><div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Occupancy forecast','by month',bars([['Dec',41,'41%'],['Jan',33,'33%'],['Feb',38,'38%'],['Mar',52,'52%'],['Apr',66,'66%'],['May',78,'78%']]))+
+    card('Next 7 days','objects booked per day',bars([['Mon',14,'14'],['Tue',12,'12'],['Wed',16,'16'],['Thu',19,'19'],['Fri',24,'24'],['Sat',26,'26'],['Sun',18,'18']]))+
+  '</div><div style="height:16px"></div>'+
+  card('Top-10 upcoming bookings by amount','',rows([['Arrival'],['Guest'],['Object'],['Amount',1]],[
+    ['08 Dec','E. Osolovskaya','Bungalow 14','€ 4,200'],
+    ['15 Dec','M. Müller','Villa tent 07','€ 3,780'],
+    ['22 Dec','A. Smith','Bungalow 22','€ 3,100'],
+    ['29 Dec','L. Garcia','Bungalow 05','€ 2,760']
+  ]))+
+  note('How this works',
+    'The forecast is built from bookings that are already in the system — it shows how full the coming months look and where there is room to sell.');
+};
+
+/* -------- Grid (chess) -------- */
+V.grid=function(){
+  var days=['Mon 23','Tue 24','Wed 25','Thu 26','Fri 27','Sat 28','Sun 29'];
+  var data=[
+    ['Bungalow 14',['b','b','b','f','f','b','b']],
+    ['Bungalow 22',['f','b','b','b','b','b','f']],
+    ['Bungalow 05',['b','b','b','b','d','d','b']],
+    ['Bungalow 31',['f','f','b','b','b','f','f']],
+    ['Villa tent 07',['b','b','f','f','b','b','b']],
+    ['Safari tent 12',['f','b','b','b','b','f','f']],
+    ['Tent 18',['b','f','f','b','b','b','f']]
+  ];
+  var cls={f:'free',b:'busy',d:'dens'};
+  var head='<div class="gridcells" style="grid-template-columns:150px repeat(7,1fr)">'+
+    '<div class="h"></div>'+days.map(function(d){return '<div class="h">'+d+'</div>';}).join('');
+  data.forEach(function(r){
+    head+='<div class="r">'+r[0]+'</div>'+r[1].map(function(c){return '<div class="cell '+cls[c]+'">'+(c==='f'?'':'●')+'</div>';}).join('');
+  });
+  head+='</div>';
+  return '<div class="panelhead"><span class="muted">Week 23–29 Nov</span>'+
+    '<span style="margin-left:auto" class="muted">'
+    +'<span class="pill busy">Busy</span> <span class="pill dens">Occupied</span> <span class="pill free">Free</span></span></div>'+
+  card('Tent rental — by days','click a free cell to book, a busy one to open it',head)+
+  note('How this works',
+    'The grid is your tent and fishing rentals on a timeline: terracotta is busy, warm grey is free. Click a free cell to create a booking, click a busy one to open it. The same screen prints a PDF voucher for the guest.');
+};
+
+/* -------- Fishing -------- */
+V.fishing=function(){
+  return '<div class="grid k3">'+
+    kpi('Fishing sold','318','tickets, this season')+
+    kpi('Revenue','€ 9,540','from fishing')+
+    kpi('Avg. per company','€ 30','')+
+  '</div><div style="height:16px"></div>'+
+  card('Fishing — by days','',rows([['Date'],['Companies',1],['Guests',1],['Amount',1]],[
+    ['25 Nov','6','14','€ 420'],
+    ['26 Nov','4','9','€ 270'],
+    ['27 Nov','7','16','€ 480'],
+    ['28 Nov','9','21','€ 630'],
+    ['29 Nov','8','18','€ 540']
+  ]))+
+  note('How this works',
+    'Fishing tickets are counted separately from the tents, so you always see how much the fishing itself earns.');
+};
+
+/* -------- Tent occupancy -------- */
+V.occupancy=function(){
+  return '<div class="panelhead"><span class="muted">Period</span>'+
+    '<span class="field" style="width:auto">01.11.2026</span><span class="muted">to</span>'+
+    '<span class="field" style="width:auto">30.11.2026</span>'+
+    '<button class="btn g s">Calculate</button><button class="btn n s" style="margin-left:auto">Export to Excel</button></div>'+
+  card('Occupancy and revenue by object','28 objects · 30 days',
+    rows([['Object'],['Days busy',1],['Days total',1],['Occupancy',1],['Revenue',1]],[
+      ['Bungalow 14','22','30','73%','€ 2,640'],
+      ['Bungalow 22','18','30','60%','€ 2,160'],
+      ['Bungalow 05','25','30','83%','€ 3,125'],
+      ['Villa tent 07','20','30','67%','€ 3,000'],
+      ['Safari tent 12','16','30','53%','€ 1,920'],
+      [{h:'<b>Total</b>','n':0},{h:'','n':0},{h:'','n':0},{h:'<b>74%</b>','n':1},{h:'<b>€ 41,200</b>','n':1}]
+    ]))+
+  note('How this works',
+    'For any period the program calculates how many days each object was occupied and how much it earned. Export to Excel in one click.');
+};
+
+/* -------- Payroll -------- */
+V.payroll=function(){
+  return '<div class="panelhead"><button class="btn n s">‹</button><span class="muted">November 2026</span><button class="btn n s">›</button>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Table</span><span class="tab">Statistics</span></div>'+
+    '<button class="btn n s" style="margin-left:auto">Staff list…</button></div>'+
+  card('Accruals for the month','',
+    rows([['Employee'],['Position'],['Salary',1],['Days',1],['Accrued',1],['Paid',1],['Balance',1]],[
+      ['Ivan Petrov','Manager','€ 900','26/30','€ 780','€ 780','€ 0'],
+      ['Maria Ivanova','Housekeeping','€ 700','28/30','€ 653','€ 300','<span class="pill warn">€ 353</span>'],
+      ['Sergey Kuznetsov','Chef','€ 850','24/30','€ 680','€ 680','€ 0'],
+      ['Anna Smirnova','Waitress','€ 650','22/30','€ 477','€ 200','<span class="pill warn">€ 277</span>'],
+      ['Dmitry Orlov','Technician','€ 600','20/30','€ 400','€ 400','€ 0']
+    ]))+
+  '<div style="height:16px"></div>'+
+  '<div class="grid twoe">'+
+    card('Month summary','',rows([['Item'],[{h:'Amount',n:1}]],[
+      ['Total accrued','€ 2,990'],['Paid','€ 2,360'],['<b>Balance to pay</b>','<b>€ 630</b>'],['Active staff','5']
+    ]))+
+    card('Manager taxes','official part € 500',rows([['Tax'],[{h:'Amount',n:1}]],[
+      ['Income tax (13%)','€ 65'],['Social contributions (30%)','€ 150'],['<b>Total per month</b>','<b>€ 215</b>']
+    ]))+
+  '</div>'+
+  note('How this works',
+    'Staff, salaries and worked days are kept here. You mark the days worked on a calendar, add payments as they happen, and the program shows the <b>accrued amount, what is paid and the balance</b>. '+
+    'For the manager it also calculates the <b>taxes (13% + 30%)</b> automatically. A month-by-month view shows any remaining debts.');
+};
+
+/* -------- Campaigns (Google Ads) -------- */
+V.campaigns=function(){
+  return '<div class="panelhead"><span class="muted">Account</span><span class="field" style="width:auto">Google Ads · Ostrom Glamping</span>'+
+    '<div class="tabs" style="margin-left:12px"><span class="tab on">Last 30 days</span><span class="tab">This month</span><span class="tab">Last season</span></div>'+
+    '<button class="btn g s" style="margin-left:auto">Refresh now</button></div>'+
+  '<div class="grid k4">'+
+    kpi('Spend','€ 1,240','last 30 days')+
+    kpi('Clicks','3,410','CTR 5.1% · CPC € 0.36')+
+    kpi('Bookings from ads','128','conversions')+
+    kpi('Revenue','€ 9,880','ROAS 8.0×')+
+  '</div><div style="height:16px"></div>'+
+  card('Campaign performance','Google Ads · 6 campaigns',
+    rows([['Campaign'],['Type'],['State'],['Budget / day',1],['Spend',1],['Clicks',1],['CTR',1],['Bookings',1],['ROAS',1]],[
+      ['Search — glamping EU',{h:'Search','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 25','€ 520','1,640','6.2%','62','4.1×'],
+      ['Performance Max — tents',{h:'PMax','n':0},{h:'<span class="pill ok">Running</span>','n':0},'€ 18','€ 380','1,020','4.8%','38','3.4×'],
+      ['Search — brand',{h:'Search','n':0},{h:'<span class="pill warn">Budget limited</span>','n':0},'€ 6','€ 130','410','11.4%','9','5.2×'],
+      ['Display — remarketing',{h:'Display','n':0},{h:'<span class="pill check">Paused</span>','n':0},'€ 10','€ 210','540','1.9%','19','2.9×']
+    ]))+
+  note('How this works',
+    'Advertising figures come straight from the <b>Google Ads API</b> — the program reads them itself, no screenshots or spreadsheets. You see spend, clicks, bookings and return on each campaign, and can open any of them.');
+};
+
+/* -------- Breakdowns -------- */
+V.breakdowns=function(){
+  return '<div class="panelhead"><span class="muted">Campaign</span><span class="field" style="width:auto">Search — glamping EU</span>'+
+    '<button class="btn n s" style="margin-left:auto">Export CSV</button><button class="btn g s">Refresh</button></div>'+
+  '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Search terms</span><span class="tab">Keywords</span><span class="tab">Devices</span><span class="tab">Locations</span><span class="tab">Ad schedule</span></div>'+
+  card('Search terms','rows: 46',
+    rows([['Search term'],['Match type'],['Impr.',1],['Clicks',1],['Spend',1],['Bookings',1]],[
+      ['glamping holidays europe','phrase','4,120','210','€ 64','9'],
+      ['luxury tent break','exact','2,880','164','€ 51','6'],
+      ['family holiday in nature','broad','3,540','142','€ 44','5'],
+      ['fishing weekend getaway','exact','1,960','98','€ 31','4']
+    ]))+
+  note('How this works',
+    'Breakdowns show which search terms, keywords, devices and countries actually bring bookings, so you can cut what does not work and add budget where it does.');
+};
+
+/* -------- API access -------- */
+V.api=function(){
+  return '<div class="grid twoe">'+
+    card('Access to the Google Ads API','',
+      '<p class="muted" style="margin:0 0 10px">Your own token, stored locally on your computer and never printed in the log.</p>'+
+      '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="K8pQ2x••••••••••••" style="flex:1"><button class="btn n s">Show</button><button class="btn g s">Check</button></div>'+
+      '<div class="muted" style="margin-bottom:14px">Customer ID: 123-456-7890 · manager account 987-654-3210</div>'+
+      rows([['Item'],['Value']],[
+        ['Developer token','stored (encrypted, local)'],
+        ['OAuth refresh token','stored (encrypted, local)'],
+        ['Last update','25 Nov 2026, 09:12'],
+        ['Account balance','€ 118.40'],
+        ['API quota','2,450 calls left today']
+      ]))+
+    card('Status','',note('Privacy','The token stays on your computer. The program only calls the Google Ads API and shows exactly what Google answered. It is never sent anywhere else.','gr'))+
+  '</div>'+
+  note('How this works',
+    'This screen keeps the Google Ads developer token and shows where the data comes from. Everything is local to your machine — safe to show.');
+};
+
+/* -------- Guest messages (chat) -------- */
+V.chat=function(){
+  return '<div class="grid two" style="gap:16px">'+
+   '<div class="card"><div class="chatwrap">'+
+    '<div class="convlist">'+
+      '<div class="conv on">'+av('A. Smith')+'<div class="t"><b>Room 14 — A. Smith</b><small>Hi! Could we get two extra breakfasts…</small></div><span class="dot"></span></div>'+
+      '<div class="conv">'+av('L. Garcia')+'<div class="t"><b>Room 22 — L. Garcia</b><small>What time is check-out?</small></div></div>'+
+      '<div class="conv">'+av('M. Müller')+'<div class="t"><b>Room 07 — M. Müller</b><small>Can we book a taxi?</small></div></div>'+
+    '</div>'+
+    '<div><div class="thread">'+
+      '<div class="msg g"><b>A. Smith · Room 14</b><br>Hi! Could we get two extra breakfasts tomorrow morning, around 08:30?<time>Guest · 10:24 · sent from the guest app</time></div>'+
+      '<div class="msg m"><b>Front desk</b><br>Of course — I have added 2 breakfasts for tomorrow at 08:30. Anything else?<time>Front desk · 10:26</time></div>'+
+    '</div><div class="composer"><input placeholder="Write a reply to the guest…"><button class="btn g">Send</button></div></div>'+
+   '</div></div>'+
+   '<div class="card"><div class="hd"><h3>Connected</h3><span class="m">Live</span></div><div class="bd">'+
+     rows([['Item'],['Value']],[
+       ['Channel','Guest app (web)'],
+       ['Language','Any language — e.g. English, Greek, German'],
+       ['Replies reach','guest\u2019s phone'],
+       ['Owner sees','same conversation']
+     ])+
+   '</div></div>'+
+  '</div>'+
+  note('Demo conversation',
+    'These two messages are a <b>sample</b> — nothing is sent anywhere. In the real product this is the two-way chat: <b>the guest writes from YOUR web app</b> (the guest guide you give them on arrival), and the message lands here at the front desk. The guest sees the reply on their phone, in their own language.','gr');
+};
+
+/* -------- Charges to rooms (concept) -------- */
+V.charges=function(){
+  return '<div class="panelhead"><span class="chip">Concept</span><span class="muted">Synchronisation to be agreed</span></div>'+
+  card('Restaurant &amp; bar charges to rooms — today','posted / check',
+    rows([['Time'],['Outlet'],['Room'],['Items'],['Amount',1],['Status']],[
+      ['12:40','Restaurant','Room 14','Lunch ×2, wine','€ 46.00','<span class="pill ok">Posted</span>'],
+      ['13:05','Bar','Room 07','Beers ×4','€ 20.00','<span class="pill ok">Posted</span>'],
+      ['14:10','Restaurant','Room 22','Family lunch','€ 88.50','<span class="pill ok">Posted</span>'],
+      ['15:20','Excursions','Room 05','Boat trip ×2','€ 60.00','<span class="pill ok">Posted</span>'],
+      ['16:05','Bar','Room 31','Drinks','€ 14.00','<span class="pill check">Check</span>']
+    ]))+
+  '<div style="height:16px"></div>'+
+  '<div class="grid k4">'+
+    kpi('Step 1','Order','waiter takes it on a tablet')+
+    kpi('Step 2','Kitchen','order appears in the kitchen')+
+    kpi('Step 3','To the room','charge is posted to the room')+
+    kpi('Step 4','Check-out','settled in one bill')+
+  '</div>'+
+  note('How this works',
+    'The guest orders, the charge goes onto their room, and at check-out it is settled together with the stay. A charge marked <b>“Check”</b> has not moved for a while — the program flags it so nothing is lost. '+
+    'This is a <b>concept screen</b>: the exact synchronisation with your restaurant system is agreed during the setup.','am');
+};
+
+/* -------- About this demo -------- */
+V.about=function(){
+  return '<div class="grid twoe">'+
+    card('About this demo','',note('Stand-alone demo',
+      'This is a <b>stand-alone demo</b> with <b>sample data only</b>. It is not connected to any real system and shows nothing from a live database — safe to show to anyone.',
+      'gr'))+
+    card('Your programme, your way','',
+      '<ul style="margin:0;padding-left:18px;font-size:13.5px;line-height:1.7">'+
+      '<li>Every screen can be <b>tuned to your needs</b> — your objects, your tariffs, your reports.</li>'+
+      '<li>Delivered as a <b>web app</b> (any browser) or a <b>desktop app for Windows and Mac</b>.</li>'+
+      '<li>Data comes from your booking system <b>via the API</b> — nothing is typed twice.</li>'+
+      '<li>Interface language: <b>any</b> — chosen to suit your guests (English, Greek, German, or whatever you need).</li>'+
+      '<li>Works offline on a laptop as well as online.</li>'+
+      '</ul>')+
+  '</div>'+
+  note('What a client sees',
+    'On every screen there is a warm “How this works” note. They explain where the numbers come from and how they are calculated, so a client understands the product without anyone standing next to them.');
+};
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+var SEC=[
+ {t:'Arrivals on date', items:[['arrivals','Arrivals','arrivals']]},
+ {t:'Booking analytics', items:[
+   ['dashboard','Dashboard','dashboard'],['compare','Compare','compare'],
+   ['detail','Analytics detail','detail'],['guests','Guests','guests'],
+   ['rates','Rates & occupancy','rates'],['breakfasts','Breakfasts','breakfast'],
+   ['reports','Reports','reports'],['upcoming','Upcoming','upcoming']]},
+ {t:'Tent rental + Fishing', items:[
+   ['grid','Grid','grid'],['fishing','Fishing','fishing'],['occupancy','Tent occupancy','occupancy']]},
+ {t:'Salaries', items:[['payroll','Payroll','payroll']]},
+ {t:'Google Ads', items:[
+   ['campaigns','Campaigns','campaigns'],['breakdowns','Breakdowns','breakdowns'],['api','API access','api']]},
+ {t:'Guests', items:[['chat','Messages','chat']]},
+ {t:'Concept', items:[['charges','Charges to rooms','charges']]},
+ {t:'', items:[['about','About this demo','about']]}
+];
+var TITLES={arrivals:'Arrivals on date',dashboard:'Dashboard',compare:'Compare periods',detail:'Analytics detail',
+ guests:'Returning guests',rates:'Rates & occupancy',breakfasts:'Breakfast plan',reports:'Owner\u2019s reports',
+ upcoming:'Upcoming bookings',grid:'Tent grid',fishing:'Fishing',occupancy:'Tent occupancy',payroll:'Payroll',
+ campaigns:'Campaigns',breakdowns:'Breakdowns',api:'API access',chat:'Guest messages',charges:'Charges to rooms',
+ about:'About this demo'};
+var SUBS={arrivals:'Wednesday, 25 November 2026',payroll:'November 2026',chat:'2 new messages',
+ charges:'concept',dashboard:'all time'};
+
+function renderNav(){
+  var h='';
+  SEC.forEach(function(s){
+    h+='<div class="sect">'+(s.t?'<div class="st">'+s.t+'</div>':'');
+    s.items.forEach(function(it){
+      h+='<button data-k="'+it[0]+'">'+ic(it[2])+'<span>'+it[1]+'</span>'+
+         (it[0]==='chat'?'<span class="badge">2</span>':'')+'</button>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('nav').innerHTML=h;
+}
+function renderViews(){
+  var h='';
+  SEC.forEach(function(s){s.items.forEach(function(it){
+    h+='<div class="view" id="v-'+it[0]+'"></div>';
+  });});
+  document.getElementById('views').innerHTML=h;
+}
+function show(k){
+  if(!V[k]) k='arrivals';
+  document.getElementById('v-'+k).innerHTML=V[k]();
+  var vs=document.querySelectorAll('.view');
+  for(var i=0;i<vs.length;i++) vs[i].classList.remove('on');
+  document.getElementById('v-'+k).classList.add('on');
+  var bs=document.querySelectorAll('#nav button');
+  for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on', bs[j].getAttribute('data-k')===k);
+  document.getElementById('ttl').textContent=TITLES[k]||k;
+  document.getElementById('tsub').textContent=SUBS[k]||'';
+  window.scrollTo(0,0);
+}
+function route(){ show((location.hash||'#arrivals').replace('#','')); }
+renderNav(); renderViews();
+window.addEventListener('hashchange',route);
+document.getElementById('nav').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  location.hash=b.getAttribute('data-k');
+});
+route();
+</script>
+</body>
+</html>
