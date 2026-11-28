@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Палитра нового сайта «Остров»: бумага, чернила, терракота. */
+  /* Палитра: бумага, чернила, терракота. */
   --ink:#10120e; --muted:#5c6058; --bg:#f6f5f1; --card:#fff;
   --line:rgba(16,18,14,.14); --line2:rgba(16,18,14,.08);
   --side:#12140f; --side2:#1a1d17; --side-ink:#c6b8a2; --side-soft:#8a8272;
@@ -557,9 +557,9 @@ V.grid=function(){
   return '<div class="panelhead"><span class="muted">Неделя 23–29 ноя</span>'+
     '<span style="margin-left:auto" class="muted">'
     +'<span class="pill busy">Занято</span> <span class="pill dens">Проживание</span> <span class="pill free">Свободно</span></span></div>'+
-  card('Аренда объектов — по дням','нажмите свободную клетку, чтобы забронировать, занятую — чтобы открыть',head)+
+  card('Аренда дневных объектов — по дням','нажмите свободную клетку, чтобы забронировать, занятую — чтобы открыть',head)+
   note('Как это работает',
-    'Сетка — это аренда объектов и рыбалки на шкале времени: терракота — занято, тёплый серый — свободно. Нажмите свободную клетку, чтобы создать бронь, занятую — чтобы открыть. Этот же экран печатает PDF-путёвку для гостя.');
+    'Сетка — это аренда дневных объектов и рыбалки на шкале времени: терракота — занято, тёплый серый — свободно. Нажмите свободную клетку, чтобы создать бронь, занятую — чтобы открыть. Этот же экран печатает PDF-путёвку для гостя.');
 };
 
 /* -------- Fishing -------- */
@@ -601,7 +601,7 @@ V.occupancy=function(){
 
 /* -------- Payroll -------- */
 V.payroll=function(){
-  return '<div class="panelhead"><button class="btn n s">‹</button><span class="muted">November 2026</span><button class="btn n s">›</button>'+
+  return '<div class="panelhead"><button class="btn n s">‹</button><span class="muted">Ноябрь 2026</span><button class="btn n s">›</button>'+
     '<div class="tabs" style="margin-left:12px"><span class="tab on">Таблица</span><span class="tab">Статистика</span></div>'+
     '<button class="btn n s" style="margin-left:auto">Список сотрудников…</button></div>'+
   card('Начисления за месяц','',
@@ -628,7 +628,7 @@ V.payroll=function(){
 
 /* -------- Campaigns (Google Ads) -------- */
 V.campaigns=function(){
-  return '<div class="panelhead"><span class="muted">Аккаунт</span><span class="field" style="width:auto">Google Ads · Остров Глэмпинг</span>'+
+  return '<div class="panelhead"><span class="muted">Аккаунт</span><span class="field" style="width:auto">Google Ads · демо-аккаунт</span>'+
     '<div class="tabs" style="margin-left:12px"><span class="tab on">Последние 30 дней</span><span class="tab">Этот месяц</span><span class="tab">Прошлый сезон</span></div>'+
     '<button class="btn g s" style="margin-left:auto">Обновить сейчас</button></div>'+
   '<div class="grid k4">'+
@@ -640,9 +640,9 @@ V.campaigns=function(){
   card('Эффективность кампаний','Google Ads · 6 кампаний',
     rows([['Кампания'],['Тип'],['Состояние'],['Бюджет / день',1],['Расход',1],['Клики',1],['CTR',1],['Брони',1],['ROAS',1]],[
       ['Поиск — глэмпинг ЕС',{h:'Поиск','n':0},{h:'<span class="pill ok">Работает</span>','n':0},'25 руб','520 руб','1 640','6,2%','62','4,1×'],
-      ['Performance Max — тенты',{h:'PMax','n':0},{h:'<span class="pill ok">Работает</span>','n':0},'18 руб','380 руб','1 020','4,8%','38','3,4×'],
+      ['Максимум эффективности — тенты',{h:'Макс. эфф.','n':0},{h:'<span class="pill ok">Работает</span>','n':0},'18 руб','380 руб','1 020','4,8%','38','3,4×'],
       ['Поиск — бренд',{h:'Поиск','n':0},{h:'<span class="pill warn">Бюджет ограничен</span>','n':0},'6 руб','130 руб','410','11,4%','9','5,2×'],
-      ['Display — ретаргетинг',{h:'Display','n':0},{h:'<span class="pill check">Пауза</span>','n':0},'10 руб','210 руб','540','1,9%','19','2,9×']
+      ['КМС — ретаргетинг',{h:'КМС','n':0},{h:'<span class="pill check">Пауза</span>','n':0},'10 руб','210 руб','540','1,9%','19','2,9×']
     ]))+
   note('Как это работает',
     'Рекламные цифры приходят напрямую из <b>Google Ads API</b> — программа читает их сама, без скриншотов и таблиц. Видно расход, клики, брони и окупаемость по каждой кампании, любую можно открыть.');
@@ -655,10 +655,10 @@ V.breakdowns=function(){
   '<div class="tabs" style="margin-bottom:14px"><span class="tab on">Поисковые запросы</span><span class="tab">Ключевые слова</span><span class="tab">Устройства</span><span class="tab">География</span><span class="tab">Расписание</span></div>'+
   card('Поисковые запросы','строк: 46',
     rows([['Запрос'],['Тип соответствия'],['Показы',1],['Клики',1],['Расход',1],['Брони',1]],[
-      ['glamping holidays europe','фраза','4 120','210','64 руб','9'],
-      ['luxury tent break','точно','2 880','164','51 руб','6'],
-      ['family holiday in nature','широкое','3 540','142','44 руб','5'],
-      ['fishing weekend getaway','точно','1 960','98','31 руб','4']
+      ['глэмпинг отдых в европе','фраза','4 120','210','64 руб','9'],
+      ['люксовый шатёр на выходные','точно','2 880','164','51 руб','6'],
+      ['отдых семьёй на природе','широкое','3 540','142','44 руб','5'],
+      ['рыбалка на выходные','точно','1 960','98','31 руб','4']
     ]))+
   note('Как это работает',
     'Разбивки показывают, какие запросы, ключевые слова, устройства и страны реально приносят брони — можно отключить то, что не работает, и добавить бюджет туда, где работает.');
@@ -670,10 +670,10 @@ V.api=function(){
     card('Доступ к Google Ads API','',
       '<p class="muted" style="margin:0 0 10px">Ваш собственный токен, хранится локально на компьютере и никогда не пишется в лог.</p>'+
       '<div class="row" style="margin-bottom:12px"><input class="field" type="password" value="K8pQ2x••••••••••••" style="flex:1"><button class="btn n s">Показать</button><button class="btn g s">Проверить</button></div>'+
-      '<div class="muted" style="margin-bottom:14px">Customer ID: 123-456-7890 · аккаунт-менеджер 987-654-3210</div>'+
+      '<div class="muted" style="margin-bottom:14px">ID клиента: 123-456-7890 · аккаунт-менеджер 987-654-3210</div>'+
       rows([['Параметр'],['Значение']],[
-        ['Developer token','хранится (шифровано, локально)'],
-        ['OAuth refresh token','хранится (шифровано, локально)'],
+        ['Токен разработчика','хранится (шифровано, локально)'],
+        ['Токен обновления OAuth','хранится (шифровано, локально)'],
         ['Последнее обновление','25 ноя 2026, 09:12'],
         ['Баланс аккаунта','118 руб'],
         ['Квота API','осталось 2 450 вызовов на сегодня']
@@ -681,7 +681,7 @@ V.api=function(){
     card('Статус','',note('Приватность','Токен остаётся на вашем компьютере. Программа обращается только к Google Ads API и показывает ровно то, что ответил Google. Больше никуда он не передаётся.','gr'))+
   '</div>'+
   note('Как это работает',
-    'Этот экран хранит developer token Google Ads и показывает, откуда берутся данные. Всё локально на вашем компьютере — можно показывать.');
+    'Этот экран хранит токен разработчика Google Ads и показывает, откуда берутся данные. Всё локально на вашем компьютере — можно показывать.');
 };
 
 /* -------- Guest messages (chat) -------- */
@@ -763,7 +763,7 @@ var SEC=[
    ['detail','Аналитика подробно','detail'],['guests','Гости','guests'],
    ['rates','Тарифы и загрузка','rates'],['breakfasts','Завтраки','breakfast'],
    ['reports','Отчёты','reports'],['upcoming','Предстоящие','upcoming']]},
- {t:'Аренда объектов + Рыбалка', items:[
+ {t:'Аренда дневных объектов и рыбалка', items:[
    ['grid','Сетка','grid'],['fishing','Рыбалка','fishing'],['occupancy','Загрузка объектов','occupancy']]},
  {t:'Зарплаты', items:[['payroll','Зарплаты','payroll']]},
  {t:'Google Ads', items:[
